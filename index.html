@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Darp 💙</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Fredoka:wght@300;400;500;600&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Landing Page -->
+    <section id="landing" class="landing-page">
+        <div class="landing-content">
+            <div class="floating-stickers">
+                <span class="sticker sticker-star">⭐</span>
+                <span class="sticker sticker-heart">💙</span>
+                <span class="sticker sticker-sparkle">✨</span>
+                <span class="sticker sticker-flower">🌸</span>
+                <span class="sticker sticker-star2">⭐</span>
+            </div>
+
+            <div class="hero-container">
+                <h1 class="handwritten-title">Happy Birthday, Darp</h1>
+                <p class="subtitle">A little scrapbook of memories</p>
+                <p class="tagline">For Darp — from people who love you 💙</p>
+
+                <button class="cta-button" onclick="goToGifts()">
+                    <span>Open Your Gifts</span>
+                    <span class="gift-emoji">🎁</span>
+                </button>
+
+                <div class="polaroid-preview">
+                    <div class="polaroid">
+                        <div class="polaroid-image" style="background: linear-gradient(135deg, #F8EAF6 0%, #FDEEF0 100%);"></div>
+                        <p class="polaroid-text">Darp</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="confetti-container" id="confetti"></div>
+        </div>
+    </section>
+
+    <!-- Gift Box Grid -->
+    <section id="gifts" class="gifts-section">
+        <div class="gifts-header">
+            <h2>Your Gift Boxes</h2>
+            <p>Click any box to open and explore</p>
+        </div>
+        <div class="gifts-grid" id="giftsGrid">
+            <!-- Dynamically populated -->
+        </div>
+    </section>
+
+    <!-- Modal for Gift Details -->
+    <div id="giftModal" class="modal">
+        <div class="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal-content scrapbook-modal">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+
+            <div class="modal-body">
+                <div class="gift-header">
+                    <h2 id="modalSender" class="sender-name">From Someone Special</h2>
+                    <p id="modalRelationship" class="relationship-tag"></p>
+                </div>
+
+                <div class="gift-message-section">
+                    <p id="modalMessage" class="gift-message"></p>
+                </div>
+
+                <div id="poemSection" class="poem-section" style="display: none;">
+                    <p id="modalPoem" class="poem-text"></p>
+                </div>
+
+                <div id="photosSection" class="photos-section" style="display: none;">
+                    <div id="photosGrid" class="photos-grid">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+
+                <div class="gift-footer">
+                    <p id="modalDate" class="gift-date"></p>
+                </div>
+            </div>
+
+            <div class="washi-tape washi-top-left"></div>
+            <div class="washi-tape washi-top-right"></div>
+            <div class="washi-tape washi-bottom-left"></div>
+            <div class="washi-tape washi-bottom-right"></div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

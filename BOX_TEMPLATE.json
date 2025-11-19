@@ -1,0 +1,23 @@
+{
+  "id": "box_XXX",
+  "displayOrder": 1,
+  "sender": "Person's Name",
+  "relationship": "Relationship (optional)",
+  "message": "Write your heartfelt birthday message here. You can use multiple paragraphs by adding \\n\\n between them.\n\nLike this for a new paragraph!",
+  "poem": "Optional: Add a short poem or verse here\nYou can skip this entire field if you don't want a poem",
+  "photos": [
+    "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300&h=300&fit=crop",
+    "https://images.unsplash.com/photo-1516534775068-bb57a52f4fee?w=300&h=300&fit=crop",
+    "https://images.unsplash.com/photo-1522684072519-3c0f0b2e5d5d?w=300&h=300&fit=crop"
+  ],
+  "captions": [
+    "Caption for photo 1",
+    "Caption for photo 2",
+    "Caption for photo 3"
+  ],
+  "theme": {
+    "coverColor": "#FDEEF0",
+    "sticker": "💙"
+  },
+  "date": "2025-11-17T20:00:00+05:30"
+}

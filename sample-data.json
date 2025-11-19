@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Happy Birthday, Darp",
+    "subtitle": "A scrapbook of wishes",
+    "description": "A collection of heartfelt messages and memories from people who love you"
+  },
+  "boxes": [
+    {
+      "id": "box_001",
+      "displayOrder": 1,
+      "sender": "Ankita",
+      "relationship": "Best Friend",
+      "message": "Happy Birthday Darp! 💙\n\nI can't believe another year has passed! You've been such an incredible friend to me. From our late-night talks to our spontaneous adventures, every moment with you is precious. Your kindness, humor, and genuine care for people around you make you truly special.\n\nThank you for being the kind of friend who listens without judgment, laughs at my terrible jokes, and always knows how to brighten my day. I'm so grateful to have you in my life.\n\nHere's to another year of making beautiful memories together. I can't wait to see what adventures await us!\n\nWith all my love,\nAnkita 💕",
+      "poem": "Another year older, another year wise,\nWith laughter that sparkles in your eyes.\nYou bring so much joy to all that you meet,\nYou make every moment feel complete.\n\nHappy birthday to someone so true,\nThe world is so much better with you.",
+      "photos": [
+        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300&h=300&fit=crop",
+        "https://images.unsplash.com/photo-1516534775068-bb57a52f4fee?w=300&h=300&fit=crop",
+        "https://images.unsplash.com/photo-1522684072519-3c0f0b2e5d5d?w=300&h=300&fit=crop"
+      ],
+      "captions": [
+        "Our first adventure",
+        "Coffee dates",
+        "Sunset memories"
+      ],
+      "theme": {
+        "coverColor": "#FDEEF0",
+        "sticker": "💙"
+      },
+      "date": "2025-11-17T20:00:00+05:30"
+    },
+    {
+      "id": "box_002",
+      "displayOrder": 2,
+      "sender": "Your Mom",
+      "relationship": "Family",
+      "message": "My dearest Darp,\n\nOn your special day, I want you to know how proud I am of the person you've become. Watching you grow into such a compassionate, talented, and wonderful human being has been the greatest joy of my life.\n\nYou have a beautiful soul and a heart full of love. The way you care for others, the dreams you chase, and the positivity you bring to every room—these are the things that make me so incredibly proud to be your parent.\n\nI wish you a year filled with happiness, success, and all the love you deserve. May you continue to shine brightly and inspire everyone around you.\n\nWith endless love and pride,\nMom 💕",
+      "poem": "On this day, a star was born,\nBringing light through every morn.\nWith a heart so pure and kind,\nA rarer soul you'll never find.\n\nMay your birthday be as special as you,\nFilled with dreams that all come true.",
+      "photos": [
+        "https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=300&h=300&fit=crop",
+        "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300&h=300&fit=crop"
+      ],
+      "captions": [
+        "Growing up",
+        "Precious moments"
+      ],
+      "theme": {
+        "coverColor": "#DDEBF9",
+        "sticker": "🌸"
+      },
+      "date": "2025-11-16T18:30:00+05:30"
+    },
+    {
+      "id": "box_003",
+      "displayOrder": 3,
+      "sender": "Your Friends",
+      "relationship": "Squad",
+      "message": "Yo Darp! 🎉\n\nIt's your day to shine, and we're here to celebrate YOU! From the countless laughs we've shared to the memories we've created together, you've made our lives so much richer.\n\nYou're the kind of friend who makes everyone feel welcome, who remembers the little things, and who's always there when it matters. Your loyalty, your humor, and your genuine care for your friends are truly inspiring.\n\nHere's to celebrating you today and every day! May this year bring you joy, success, and all the happiness you deserve.\n\nCheers to the best friend ever!\nYour Squad 🎊",
+      "poem": "Another year, another chance,\nTo celebrate and dance and prance.\nWith friends like us by your side,\nThere's nothing you can't achieve with pride.\n\nHappy birthday to our favorite person,\nYou make life feel like a celebration.",
+      "photos": [
+        "https://images.unsplash.com/photo-1519671482677-504be0271101?w=300&h=300&fit=crop",
+        "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300&h=300&fit=crop",
+        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300&h=300&fit=crop",
+        "https://images.unsplash.com/photo-1516534775068-bb57a52f4fee?w=300&h=300&fit=crop"
+      ],
+      "captions": [
+        "Squad goals",
+        "Best times",
+        "Unforgettable moments",
+        "Forever friends"
+      ],
+      "theme": {
+        "coverColor": "#F7F1EA",
+        "sticker": "✨"
+      },
+      "date": "2025-11-15T15:45:00+05:30"
+    }
+  ]
+}
