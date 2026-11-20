@@ -8,7 +8,7 @@ let lyricsData    = [];
 let thingsData    = [];
 let ifyouwereData = [];
 let receiptsData  = [];
-let isSafeMode    = localStorage.getItem('darp_safe_mode') === 'true';
+let isSafeMode    = localStorage.getItem('darp_safe_mode') !== 'false';
 
 // ===========================
 // INIT
