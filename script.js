@@ -1,392 +1,372 @@
 // ===========================
-// GIFT BOX SCRAPBOOK APP
+// FOR DARP — App Logic
+// Golden Hours Edition
 // ===========================
 
-let giftBoxesData = [];
-let currentOpenBox = null;
+let lettersData   = [];
+let lyricsData    = [];
+let thingsData    = [];
+let ifyouwereData = [];
+let receiptsData  = [];
 
-// Initialize app on page load
+// ===========================
+// INIT
+// ===========================
+
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadGiftBoxes();
-    renderGiftBoxes();
+    await Promise.allSettled([
+        loadLetters(),
+        loadLyrics(),
+        loadThings(),
+        loadIfYouWere(),
+        loadReceipts()
+    ]);
+    renderLetters();
+    renderLyrics();
+    renderThings();
+    renderIfYouWere();
+    renderReceipts();
 });
 
 // ===========================
 // DATA LOADING
 // ===========================
 
-/**
- * Load gift boxes from JSON file
- * The JSON file should be at /boxes.json in the root directory
- * If not found, falls back to sample-data.json
- */
-async function loadGiftBoxes() {
+async function loadLetters() {
     try {
-        // Try to load boxes.json first (production data)
-        let response = await fetch('./boxes.json');
-        
-        // If boxes.json doesn't exist, try sample-data.json
-        if (!response.ok) {
-            response = await fetch('./sample-data.json');
-        }
-        
-        if (!response.ok) {
-            throw new Error('Could not load gift boxes data');
-        }
-        
-        const data = await response.json();
-        giftBoxesData = data.boxes || [];
-        
-        // Sort by displayOrder
-        giftBoxesData.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
-        
-        console.log(`Loaded ${giftBoxesData.length} gift boxes`);
-    } catch (error) {
-        console.error('Error loading gift boxes:', error);
-        // Use empty array if loading fails
-        giftBoxesData = [];
+        let r = await fetch('./boxes.json');
+        if (!r.ok) r = await fetch('./sample-data.json');
+        if (!r.ok) throw new Error('none');
+        const data = await r.json();
+        lettersData = data.boxes || [];
+        lettersData.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+    } catch (e) {
+        lettersData = [];
+    }
+}
+
+async function loadLyrics() {
+    try {
+        const r = await fetch('./lyrics.json');
+        if (!r.ok) throw new Error('none');
+        const data = await r.json();
+        lyricsData = data.lyrics || [];
+    } catch (e) {
+        lyricsData = [];
+    }
+}
+
+async function loadThings() {
+    try {
+        const r = await fetch('./things.json');
+        if (!r.ok) throw new Error('none');
+        const data = await r.json();
+        thingsData = data.contributors || [];
+    } catch (e) {
+        thingsData = [];
+    }
+}
+
+async function loadIfYouWere() {
+    try {
+        const r = await fetch('./ifyouwereas.json');
+        if (!r.ok) throw new Error('none');
+        const data = await r.json();
+        ifyouwereData = data.entries || [];
+    } catch (e) {
+        ifyouwereData = [];
+    }
+}
+
+async function loadReceipts() {
+    try {
+        const r = await fetch('./receipts.json');
+        if (!r.ok) throw new Error('none');
+        const data = await r.json();
+        receiptsData = data.receipts || [];
+    } catch (e) {
+        receiptsData = [];
     }
 }
 
 // ===========================
-// RENDERING
+// NAVIGATION
 // ===========================
 
-/**
- * Render all gift boxes to the grid
- */
-function renderGiftBoxes() {
-    const giftsGrid = document.getElementById('giftsGrid');
-    giftsGrid.innerHTML = '';
-    
-    if (giftBoxesData.length === 0) {
-        giftsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem; opacity: 0.6;">No gift boxes yet. Check back soon! 💙</p>';
+function enterSite() {
+    document.getElementById('main').scrollIntoView({ behavior: 'smooth' });
+    triggerConfetti();
+}
+
+function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    document.getElementById(tab).classList.add('active');
+    const nav = document.getElementById('tabNav');
+    window.scrollTo({ top: nav.getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
+}
+
+// ===========================
+// RENDER: LETTERS
+// ===========================
+
+function renderLetters() {
+    const grid = document.getElementById('lettersGrid');
+    grid.innerHTML = '';
+    if (!lettersData.length) {
+        grid.innerHTML = emptyState('💌', 'Letters are on their way…', 'Check back soon.');
         return;
     }
-    
-    giftBoxesData.forEach((box, index) => {
-        const boxElement = createGiftBoxElement(box, index);
-        giftsGrid.appendChild(boxElement);
-    });
-}
-
-/**
- * Create a single gift box element
- */
-function createGiftBoxElement(box, index) {
-    const boxDiv = document.createElement('div');
-    boxDiv.className = 'gift-box';
-    boxDiv.style.animationDelay = `${index * 0.1}s`;
-    
-    // Get theme colors
-    const themeColor = box.theme?.coverColor || getRandomPastelColor();
-    const sticker = box.theme?.sticker || getRandomSticker();
-    
-    // Create preview text
-    const previewText = box.message?.substring(0, 80) + '...' || 'A special message';
-    
-    // Format date
-    const dateStr = formatDate(box.date);
-    
-    boxDiv.innerHTML = `
-        <div class="gift-box-cover" style="background: linear-gradient(135deg, ${themeColor} 0%, ${lightenColor(themeColor)} 100%);">
-            <span style="display: inline-block; animation: bounce 0.8s ease-in-out infinite; animation-delay: ${index * 0.1}s;">
+    lettersData.forEach((letter, i) => {
+        const card = document.createElement('div');
+        card.className = 'letter-card';
+        card.style.animationDelay = `${i * 0.07}s`;
+        const color   = letter.theme?.coverColor || '#F3E9D8';
+        const sticker = letter.theme?.sticker     || '💌';
+        const preview = (letter.message || '').substring(0, 100);
+        card.innerHTML = `
+            <div class="letter-card-cover"
+                 style="background: linear-gradient(135deg, ${color} 0%, ${lightenHex(color, 18)} 100%);">
                 ${sticker}
-            </span>
-        </div>
-        <div class="gift-box-info">
-            <div class="gift-box-sender">${box.sender || 'Someone Special'}</div>
-            ${box.relationship ? `<div class="gift-box-relationship">${box.relationship}</div>` : ''}
-            <div class="gift-box-preview">${previewText}</div>
-            <div class="gift-box-date">${dateStr}</div>
-        </div>
-    `;
-    
-    boxDiv.addEventListener('click', () => openGiftModal(box));
-    
-    // Add hover sound effect (optional visual feedback)
-    boxDiv.addEventListener('mouseenter', () => {
-        boxDiv.style.animation = 'shake 0.5s ease-in-out';
+            </div>
+            <div class="letter-card-body">
+                <div class="letter-sender">${esc(letter.sender || 'Someone Special')}</div>
+                ${letter.relationship ? `<div class="letter-relationship">${esc(letter.relationship)}</div>` : ''}
+                <div class="letter-preview">${esc(preview)}…</div>
+                <div class="letter-date">${formatDate(letter.date)}</div>
+            </div>`;
+        card.addEventListener('click', () => openLetterModal(letter));
+        grid.appendChild(card);
     });
-    
-    return boxDiv;
 }
 
-/**
- * Open gift modal with full details
- */
-function openGiftModal(box) {
-    currentOpenBox = box;
-    
-    // Populate modal content
-    document.getElementById('modalSender').textContent = box.sender || 'Someone Special';
-    
-    const relationshipEl = document.getElementById('modalRelationship');
-    if (box.relationship) {
-        relationshipEl.textContent = box.relationship;
-        relationshipEl.style.display = 'inline-block';
-    } else {
-        relationshipEl.style.display = 'none';
+// ===========================
+// RENDER: LYRICS
+// ===========================
+
+function renderLyrics() {
+    const grid = document.getElementById('lyricsGrid');
+    grid.innerHTML = '';
+    if (!lyricsData.length) {
+        grid.innerHTML = emptyState('🎵', 'The playlist is coming together…', 'Check back soon.');
+        return;
     }
-    
-    document.getElementById('modalMessage').textContent = box.message || '';
-    
-    // Handle poem section
-    const poemSection = document.getElementById('poemSection');
-    if (box.poem) {
-        document.getElementById('modalPoem').textContent = box.poem;
-        poemSection.style.display = 'block';
-    } else {
-        poemSection.style.display = 'none';
+    lyricsData.forEach((item, i) => {
+        const card = document.createElement('div');
+        card.className = 'spotify-lyric-card';
+        card.style.animationDelay = `${i * 0.08}s`;
+        
+        const bg = item.bgColor || '#C9A882';
+        const fg = item.textColor || '#FFFFFF';
+        const isLight = fg.toLowerCase() !== '#ffffff';
+        const spotifyLogoFill = isLight ? '#191414' : '#FFFFFF';
+        const doodles = item.doodles ? item.doodles.map(d => `<span class="lyric-doodle">${d}</span>`).join('') : '';
+
+        card.style.setProperty('--card-bg', bg);
+        card.style.setProperty('--card-fg', fg);
+
+        card.innerHTML = `
+            <div class="spotify-card-inner" style="background-color: ${bg}; color: ${fg};">
+                <div class="doodle-layer">${doodles}</div>
+                <div class="spotify-card-header">
+                    <img class="spotify-album-art" src="${esc(item.albumArt || 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=100&h=100&fit=crop')}" alt="${esc(item.song)}">
+                    <div class="spotify-track-meta">
+                        <div class="spotify-track-title">${esc(item.song)}</div>
+                        <div class="spotify-track-artist">${esc(item.artist)}</div>
+                    </div>
+                </div>
+                <div class="spotify-lyric-body">
+                    <p class="spotify-lyric-quote">${esc(item.lyrics)}</p>
+                    ${item.subtitle ? `<p class="spotify-lyric-subnote">${esc(item.subtitle)}</p>` : ''}
+                </div>
+                <div class="spotify-card-footer">
+                    <div class="spotify-badge">
+                        <svg class="spotify-icon" viewBox="0 0 24 24" width="20" height="20" fill="${spotifyLogoFill}">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.498 17.303c-.215.352-.676.465-1.028.249-2.817-1.722-6.362-2.111-10.539-1.157-.402.092-.803-.16-.895-.562-.092-.403.159-.804.562-.896 4.571-1.045 8.492-.597 11.652 1.338.352.216.464.677.248 1.028zm1.468-3.262c-.27.439-.848.579-1.287.31-3.225-1.982-8.14-2.557-11.954-1.399-.499.151-1.03-.133-1.181-.632-.151-.499.133-1.03.632-1.181 4.363-1.325 9.782-.686 13.479 1.583.439.269.58.847.311 1.289zm.126-3.41c-3.864-2.294-10.245-2.506-13.934-1.386-.59.18-1.221-.157-1.4-.747-.18-.59.156-1.221.746-1.4 4.242-1.288 11.285-1.043 15.742 1.604.532.316.706 1.008.39 1.54-.316.533-1.007.708-1.544.389z"/>
+                        </svg>
+                        <span class="spotify-label">Spotify</span>
+                    </div>
+                    ${item.tag ? `<span class="spotify-tag-badge">${esc(item.tag)}</span>` : ''}
+                </div>
+            </div>`;
+        grid.appendChild(card);
+    });
+}
+
+// ===========================
+// RENDER: LITTLE THINGS
+// ===========================
+
+function renderThings() {
+    const grid = document.getElementById('thingsGrid');
+    grid.innerHTML = '';
+    if (!thingsData.length) {
+        grid.innerHTML = emptyState('🌿', 'Little things, incoming…', 'Check back soon.');
+        return;
     }
-    
-    // Handle photos section
-    const photosSection = document.getElementById('photosSection');
-    if (box.photos && box.photos.length > 0) {
-        renderPhotos(box.photos, box.captions);
-        photosSection.style.display = 'block';
-    } else {
-        photosSection.style.display = 'none';
+    thingsData.forEach((contributor, i) => {
+        const card = document.createElement('div');
+        card.className = 'things-card';
+        card.style.animationDelay = `${i * 0.07}s`;
+        const itemsHtml = (contributor.items || []).map(item => `
+            <div class="thing-item">
+                <span class="thing-emoji">${item.emoji || '✦'}</span>
+                <div>
+                    <div class="thing-name">${esc(item.name)}</div>
+                    ${item.reason ? `<div class="thing-reason">${esc(item.reason)}</div>` : ''}
+                </div>
+            </div>`).join('');
+        card.innerHTML = `${itemsHtml}`;
+        grid.appendChild(card);
+    });
+}
+
+// ===========================
+// RENDER: IF YOU WERE A...
+// ===========================
+
+function renderIfYouWere() {
+    const grid = document.getElementById('ifyouwereGrid');
+    grid.innerHTML = '';
+    if (!ifyouwereData.length) {
+        grid.innerHTML = emptyState('✨', 'Coming soon…', 'Check back soon.');
+        return;
     }
-    
-    // Format and display date
-    document.getElementById('modalDate').textContent = `Shared on ${formatDate(box.date)}`;
-    
-    // Show modal with animation
-    const modal = document.getElementById('giftModal');
-    modal.classList.add('active');
+    ifyouwereData.forEach((entry, i) => {
+        const card = document.createElement('div');
+        card.className = 'ifyouwere-card';
+        card.style.animationDelay = `${i * 0.07}s`;
+        const assignmentsHtml = (entry.assignments || []).map(a => `
+            <div class="ifyouwere-item">
+                <div class="ifyouwere-row">
+                    <span class="ifyouwere-category">if you were ${esc(a.category)} →</span>
+                    <span class="ifyouwere-answer">${esc(a.answer)}</span>
+                </div>
+                ${a.reason ? `<div class="ifyouwere-reason">${esc(a.reason)}</div>` : ''}
+            </div>`).join('');
+        card.innerHTML = `${assignmentsHtml}`;
+        grid.appendChild(card);
+    });
+}
+
+// ===========================
+// RENDER: RECEIPTS
+// ===========================
+
+function renderReceipts() {
+    const grid = document.getElementById('receiptsGrid');
+    grid.innerHTML = '';
+    if (!receiptsData.length) {
+        grid.innerHTML = emptyState('🧾', 'Gathering evidence…', 'Check back soon.');
+        return;
+    }
+    receiptsData.forEach((receipt, i) => {
+        const card = document.createElement('div');
+        card.className = 'receipt-card';
+        card.style.animationDelay = `${i * 0.07}s`;
+        card.innerHTML = `
+            <div class="receipt-label">${esc(receipt.label || 'Exhibit')}</div>
+            <div class="receipt-title">${esc(receipt.title)}</div>
+            <div class="receipt-subtitle">${esc(receipt.subtitle)}</div>
+            <div class="receipt-story">${esc(receipt.story)}</div>
+            <div class="receipt-verdict">${esc(receipt.verdict)}</div>`;
+        grid.appendChild(card);
+    });
+}
+
+// ===========================
+// MODALS
+// ===========================
+
+function openLetterModal(letter) {
+    const photosHtml = letter.photos?.length
+        ? `<div class="modal-photos">
+            ${letter.photos.map((url, i) => `
+                <div class="modal-photo">
+                    <img src="${url}" alt="${esc(letter.captions?.[i] || 'photo')}" loading="lazy">
+                    ${letter.captions?.[i] ? `<div class="modal-photo-caption">${esc(letter.captions[i])}</div>` : ''}
+                </div>`).join('')}
+           </div>` : '';
+    const poemHtml = letter.poem
+        ? `<div class="modal-poem">${esc(letter.poem)}</div>` : '';
+    document.getElementById('modalBody').innerHTML = `
+        <div class="modal-sender">${esc(letter.sender || 'Someone Special')}</div>
+        ${letter.relationship ? `<div class="modal-relationship">${esc(letter.relationship)}</div>` : ''}
+        <p class="modal-message">${esc(letter.message || '')}</p>
+        ${poemHtml}${photosHtml}
+        <div class="modal-date">${formatDate(letter.date)}</div>`;
+    openModal();
+    if (!letter._opened) { triggerConfetti(); letter._opened = true; }
+}
+
+function openModal() {
+    document.getElementById('modal').classList.add('active');
     document.body.style.overflow = 'hidden';
-    
-    // Trigger confetti on first open
-    if (!box._opened) {
-        triggerConfetti();
-        box._opened = true;
-    }
 }
-
-/**
- * Render photos in polaroid style
- */
-function renderPhotos(photos, captions) {
-    const photosGrid = document.getElementById('photosGrid');
-    photosGrid.innerHTML = '';
-    
-    photos.forEach((photoUrl, index) => {
-        const polaroid = document.createElement('div');
-        polaroid.className = 'photo-polaroid';
-        
-        // Random rotation between -5 and 5 degrees
-        const rotation = (Math.random() * 10 - 5);
-        polaroid.style.setProperty('--rotation', `${rotation}deg`);
-        
-        const caption = captions && captions[index] ? captions[index] : '';
-        
-        polaroid.innerHTML = `
-            <img src="${photoUrl}" alt="${caption || 'Gift photo'}" loading="lazy">
-            ${caption ? `<div class="photo-caption">${caption}</div>` : ''}
-        `;
-        
-        photosGrid.appendChild(polaroid);
-    });
-}
-
-// ===========================
-// MODAL CONTROLS
-// ===========================
-
-/**
- * Close the gift modal
- */
 function closeModal() {
-    const modal = document.getElementById('giftModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-    currentOpenBox = null;
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = '';
 }
-
-/**
- * Navigate to gifts section from landing page
- */
-function goToGifts() {
-    const giftsSection = document.getElementById('gifts');
-    giftsSection.scrollIntoView({ behavior: 'smooth' });
-}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 // ===========================
-// CONFETTI EFFECT
+// CONFETTI
 // ===========================
 
-/**
- * Trigger confetti animation when a box is opened
- */
 function triggerConfetti() {
     const container = document.getElementById('confetti');
-    const confettiCount = 120;
-    const stickers = ['🎉', '✨', '💙', '⭐', '🌸', '💕', '🎁', '🌟', '💖', '🎊', '🦋', '🌺', '💐', '🎀', '🌈', '💝', '🎈', '🌷', '🌹'];
-    
-    for (let i = 0; i < confettiCount; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.position = 'fixed';
-        confetti.style.pointerEvents = 'none';
-        confetti.style.zIndex = '100';
-        
-        // Mix of emoji stickers and colored shapes
-        if (Math.random() > 0.4) {
-            confetti.textContent = stickers[Math.floor(Math.random() * stickers.length)];
-            confetti.style.fontSize = (25 + Math.random() * 30) + 'px';
-            const vibrantColor = getRandomVibrantColor();
-            confetti.style.filter = `drop-shadow(0 0 10px ${vibrantColor}) drop-shadow(0 0 20px ${vibrantColor})`;
-            confetti.style.textShadow = `0 0 15px ${vibrantColor}`;
+    const emojis = ['🤎', '✨', '🌸', '⭐', '💫', '🌿', '🎀', '🌙', '🍂', '✦', '☕', '🌼'];
+    const colors = ['#C9A86C','#A07850','#E8D8C0','#D4BFA0','#8B6540','#5C3D2E'];
+    for (let i = 0; i < 90; i++) {
+        const el = document.createElement('div');
+        el.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;';
+        if (Math.random() > .38) {
+            el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            el.style.fontSize = (18 + Math.random() * 22) + 'px';
         } else {
-            confetti.style.width = (8 + Math.random() * 20) + 'px';
-            confetti.style.height = confetti.style.width;
-            confetti.style.backgroundColor = getRandomVibrantColor();
-            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-            confetti.style.boxShadow = `0 0 15px ${confetti.style.backgroundColor}`;
+            const size = (5 + Math.random() * 10) + 'px';
+            el.style.width = size; el.style.height = size;
+            el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            el.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
         }
-        
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.top = '-50px';
-        
-        const duration = 3 + Math.random() * 2;
-        const delay = Math.random() * 0.4;
-        const rotation = Math.random() * 360;
-        
-        confetti.style.animation = `confetti-fall ${duration}s linear ${delay}s forwards`;
-        confetti.style.transform = `rotate(${rotation}deg)`;
-        
-        container.appendChild(confetti);
-        
-        // Remove element after animation
-        setTimeout(() => confetti.remove(), (duration + delay) * 1000);
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.top  = '-70px';
+        const dur = 3 + Math.random() * 2.2;
+        const delay = Math.random() * .6;
+        el.style.animation = `confetti-fall ${dur}s linear ${delay}s forwards`;
+        container.appendChild(el);
+        setTimeout(() => el.remove(), (dur + delay) * 1000 + 200);
     }
 }
 
 // ===========================
-// UTILITY FUNCTIONS
+// UTILITIES
 // ===========================
 
-/**
- * Get a random cute sticker
- */
-function getRandomSticker() {
-    const stickers = [
-        '🎁', '💙', '✨', '🌸', '⭐', '💕', '🎉', '🌟', '💖', '🎊',
-        '🦋', '🌺', '💐', '🎀', '✨', '🌈', '💝', '🎈', '🌷', '🌹'
-    ];
-    return stickers[Math.floor(Math.random() * stickers.length)];
+function emptyState(icon, title, sub) {
+    return `<div class="empty-state">
+        <span class="empty-state-icon">${icon}</span>
+        <p class="empty-state-title">${title}</p>
+        <p class="empty-state-sub">${sub}</p>
+    </div>`;
 }
-
-/**
- * Get a random vibrant color from the new palette
- */
-function getRandomVibrantColor() {
-    const colors = [
-        '#FF006E', // deep pink
-        '#B537F2', // neon purple
-        '#00B4D8', // neon cyan
-        '#FFB703', // vibrant gold
-        '#FF4B9E', // hot pink
-        '#06FFA5', // vibrant green
-        '#FB5607', // vibrant orange
-        '#FF006E', // deep pink
-        '#B537F2', // neon purple
-        '#00B4D8'  // neon cyan
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
-
-/**
- * Get a random pastel color from the theme palette
- */
-function getRandomPastelColor() {
-    const colors = [
-        '#FF006E', // deep pink
-        '#FF4B9E', // hot pink
-        '#00B4D8', // neon cyan
-        '#FFF5E6', // cream
-        '#B537F2'  // neon purple
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
-
-/**
- * Lighten a hex color by a certain amount
- */
-function lightenColor(color) {
-    const num = parseInt(color.replace('#', ''), 16);
-    const amt = 30;
-    const usePound = true;
-    
-    const R = Math.min(255, (num >> 16) + amt);
-    const G = Math.min(255, (num >> 8 & 0x00FF) + amt);
-    const B = Math.min(255, (num & 0x0000FF) + amt);
-    
-    return (usePound ? '#' : '') + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
-}
-
-/**
- * Format date to readable string
- */
-function formatDate(dateString) {
-    if (!dateString) return 'Date unknown';
-    
+function formatDate(str) {
+    if (!str) return '';
     try {
-        const date = new Date(dateString);
-        const options = { year: 'numeric', month: 'short', day: 'numeric' };
-        return date.toLocaleDateString('en-US', options);
-    } catch (error) {
-        return 'Date unknown';
-    }
+        return new Date(str).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+    } catch { return ''; }
 }
-
-// ===========================
-// KEYBOARD NAVIGATION
-// ===========================
-
-/**
- * Close modal on Escape key
- */
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        const modal = document.getElementById('giftModal');
-        if (modal.classList.contains('active')) {
-            closeModal();
-        }
-    }
-});
-
-// ===========================
-// ACCESSIBILITY
-// ===========================
-
-/**
- * Add focus states for keyboard navigation
- */
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-        document.body.classList.add('keyboard-nav');
-    }
-});
-
-document.addEventListener('mousedown', () => {
-    document.body.classList.remove('keyboard-nav');
-});
-
-// ===========================
-// RELOAD DATA (for development)
-// ===========================
-
-/**
- * Reload gift boxes from JSON (useful for live editing)
- * Call this function in console to refresh data
- */
-async function reloadGiftBoxes() {
-    await loadGiftBoxes();
-    renderGiftBoxes();
-    console.log('Gift boxes reloaded!');
+function lightenHex(hex, amt) {
+    const n = parseInt(hex.replace('#',''), 16);
+    const R = Math.min(255, (n >> 16)         + amt);
+    const G = Math.min(255, ((n >> 8) & 0xFF) + amt);
+    const B = Math.min(255, (n & 0xFF)         + amt);
+    return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
 }
-
-// Optional: Auto-reload every 5 seconds during development
-// Uncomment the line below to enable auto-reload
-// setInterval(reloadGiftBoxes, 5000);
+function esc(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}

@@ -1,0 +1,44 @@
+{
+  "receipts": [
+    {
+      "id": "receipt_001",
+      "label": "Exhibit A",
+      "title": "The Bench",
+      "subtitle": "The day a seat in class became a permanent hostile takeover",
+      "story": "She'd fought with her regular partners and sat next to me by pure default. I said — \"anyway, you'll only be here for today.\" She looked right at me and said — \"no, I'll sit every day.\" And then she actually did. No grand declaration, no drama. Just parked herself there every single day out of pure stubbornness. That is exactly how she operates.",
+      "verdict": "Darp: 1. My expectations: 0. Territorial dispute resolved."
+    },
+    {
+      "id": "receipt_002",
+      "label": "Exhibit B",
+      "title": "The Roads",
+      "subtitle": "Walking down completely unknown streets just for the plot",
+      "story": "We would literally just walk on those unknown roads after—and honestly sometimes even before—classes, just for the hell of it. No vehicle, no destination, no GPS, zero survival instincts. Just us on foot, slightly unhinged, fully committed to being somewhere we didn't know. We weren't heading anywhere useful. We were just walking. Turned out that was the entire point.",
+      "verdict": "Step count: concerning. Memories: permanently catalogued."
+    },
+    {
+      "id": "receipt_003",
+      "label": "Exhibit C",
+      "title": "Garba Season",
+      "subtitle": "The only time our schedules magically align",
+      "story": "Statistically speaking, Navratri is when we see each other the most during the entire year. Which says a lot about both our life management skills and our collective dedication to dandiya. Some friendships require calendar invites and 3 weeks of rescheduling; we just need a pair of sticks and loud folk beats to appear in the same coordinate space.",
+      "verdict": "Annual attendance rate: 100%. Social calendar: carried by October."
+    },
+    {
+      "id": "receipt_004",
+      "label": "Exhibit D",
+      "title": "The Two-in-One Package",
+      "subtitle": "She came with a Naina, and the terms of service were non-negotiable",
+      "story": "Nobody warned me that becoming friends with Darp meant getting an automatic Naina upgrade. That's a buy-one-get-one sister package I didn't sign up for but now refuse to return. Scooty rides home, Rajasthani food deliveries, bonus chaos — essentially the household sisters I never had, delivered straight to my doorstep.",
+      "verdict": "Return policy voided. Best unasked-for bundle in history."
+    },
+    {
+      "id": "receipt_005",
+      "label": "Exhibit E",
+      "title": "The Shared Rage",
+      "subtitle": "Finding the only person who gets as furiously passionate as you do",
+      "story": "We'd start talking about feminism, pivot violently into Indian mythology, and somehow end on the inevitable collapse of late-stage capitalism. And in the middle of it, I realised: she is just as angry as I am. Not for internet points, not for aesthetic. Just deeply, correctly, beautifully furious about things that actually matter.",
+      "verdict": "Capitalism will end the world, but we'll be roasting it on the way down."
+    }
+  ]
+}

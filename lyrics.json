@@ -1,0 +1,104 @@
+{
+  "lyrics": [
+    {
+      "id": "lyric_001",
+      "song": "Something About You",
+      "artist": "Eyedress",
+      "lyrics": "She looks just like a dream\nThe prettiest girl I've ever seen\nFrom the cover of a magazine",
+      "bgColor": "#7D6285",
+      "textColor": "#FFFFFF",
+      "doodles": ["⭐", "☁️", "✨", "💜"],
+      "albumArt": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=100&h=100&fit=crop",
+      "tag": "magazine cover material"
+    },
+    {
+      "id": "lyric_002",
+      "song": "12 to 12",
+      "artist": "sombr",
+      "lyrics": "In a room full of people, I look for you\nWould you avoid me or would you look for me too?",
+      "subtitle": "a room and to be very specific maybe in a navratri ground full of people :p",
+      "bgColor": "#3C3238",
+      "textColor": "#FFFFFF",
+      "doodles": ["🌙", "✦", "✨"],
+      "albumArt": "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=100&h=100&fit=crop",
+      "tag": "garba ground radar"
+    },
+    {
+      "id": "lyric_003",
+      "song": "Nanana",
+      "artist": "Samia",
+      "lyrics": "You're my favorite friend, maybe when we're older\nIt'll still be like this",
+      "bgColor": "#3B719F",
+      "textColor": "#FFFFFF",
+      "doodles": ["🌙", "✦", "💫"],
+      "albumArt": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=100&h=100&fit=crop",
+      "tag": "favorite friend"
+    },
+    {
+      "id": "lyric_004",
+      "song": "Nothing",
+      "artist": "Bruno Major",
+      "lyrics": "Dumb conversations\nWe lose track of time\nHave I told you lately\nI'm grateful you're mine",
+      "bgColor": "#B3545A",
+      "textColor": "#FFFFFF",
+      "doodles": ["💕", "☕", "🍂"],
+      "albumArt": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop",
+      "tag": "3am chats"
+    },
+    {
+      "id": "lyric_005",
+      "song": "Belong Together",
+      "artist": "Mark Ambor",
+      "lyrics": "You and me belong together\nLike cold iced tea and warmer weather",
+      "bgColor": "#66615B",
+      "textColor": "#FFFFFF",
+      "doodles": ["🌿", "🧊", "☀️"],
+      "albumArt": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=100&h=100&fit=crop",
+      "tag": "unavoidable duo"
+    },
+    {
+      "id": "lyric_006",
+      "song": "You Get Me So High",
+      "artist": "The Neighbourhood",
+      "lyrics": "Used to stick together\nYou're my best friend, I'll love you forever",
+      "bgColor": "#A8534C",
+      "textColor": "#FFFFFF",
+      "doodles": ["🤎", "✨", "💫"],
+      "albumArt": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=100&h=100&fit=crop",
+      "tag": "two-in-one package"
+    },
+    {
+      "id": "lyric_007",
+      "song": "Enchanted",
+      "artist": "Taylor Swift",
+      "lyrics": "All I can say is I was enchanted to meet you",
+      "bgColor": "#8A6D91",
+      "textColor": "#FFFFFF",
+      "doodles": ["🌸", "💜", "✨"],
+      "albumArt": "https://images.unsplash.com/photo-1516534775068-bb57a52f4fee?w=100&h=100&fit=crop",
+      "tag": "the bench incident"
+    },
+    {
+      "id": "lyric_008",
+      "song": "Never Grow Up",
+      "artist": "Niall Horan",
+      "lyrics": "Hope we grow old,\nbut we never grow up",
+      "bgColor": "#91383A",
+      "textColor": "#FFFFFF",
+      "doodles": ["🎈", "❤️", "⭐"],
+      "albumArt": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop",
+      "tag": "forever unhinged"
+    },
+    {
+      "id": "lyric_009",
+      "song": "Whenever, Wherever",
+      "artist": "Shakira",
+      "lyrics": "Whenever, wherever\nWe're meant to be together\nI'll be there, and you'll be near\nAnd that's the deal, my dear",
+      "bgColor": "#F5EFE6",
+      "textColor": "#2C1A0E",
+      "doodles": ["🌻", "🤝", "🤎"],
+      "albumArt": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=100&h=100&fit=crop",
+      "tag": "contractually bound"
+    }
+  ]
+}

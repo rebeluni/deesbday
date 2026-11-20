@@ -3,92 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, Darp 💙</title>
+    <title>for darp, with love 🤎</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Fredoka:wght@300;400;500;600&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Landing Page -->
-    <section id="landing" class="landing-page">
+
+    <div class="confetti-container" id="confetti"></div>
+
+    <!-- LANDING -->
+    <section id="landing" class="landing">
+        <div class="landing-deco ld-1">✦</div>
+        <div class="landing-deco ld-2">🌸</div>
+        <div class="landing-deco ld-3">✦</div>
+        <div class="landing-deco ld-4">🤎</div>
+        <div class="landing-deco ld-5">✦</div>
         <div class="landing-content">
-            <div class="floating-stickers">
-                <span class="sticker sticker-star">⭐</span>
-                <span class="sticker sticker-heart">💙</span>
-                <span class="sticker sticker-sparkle">✨</span>
-                <span class="sticker sticker-flower">🌸</span>
-                <span class="sticker sticker-star2">⭐</span>
-            </div>
+            <p class="landing-pretext">an annual contractual obligation</p>
+            <h1 class="landing-title">Happy Birthday,<br><em>Darp.</em></h1>
+            <p class="landing-subtitle">yearly formality complete, only to forget it tomorrow. you may now proceed.</p>
+            <button class="enter-btn" onclick="enterSite()">
+                claim your emotional tax <span class="enter-arrow">↓</span>
+            </button>
+        </div>
+    </section>
 
-            <div class="hero-container">
-                <h1 class="handwritten-title">Happy Birthday, Darp</h1>
-                <p class="subtitle">A little scrapbook of memories</p>
-                <p class="tagline">For Darp — from people who love you 💙</p>
+    <!-- MAIN -->
+    <main id="main" class="main-content">
 
-                <button class="cta-button" onclick="goToGifts()">
-                    <span>Open Your Gifts</span>
-                    <span class="gift-emoji">🎁</span>
-                </button>
-
-                <div class="polaroid-preview">
-                    <div class="polaroid">
-                        <div class="polaroid-image" style="background: linear-gradient(135deg, #F8EAF6 0%, #FDEEF0 100%);"></div>
-                        <p class="polaroid-text">Darp</p>
+        <!-- Tab Nav -->
+        <nav class="tab-nav" id="tabNav">
+            <div class="tab-nav-inner">
+                <div class="site-wordmark">for darp 🤎</div>
+                <div class="tabs-scroll">
+                    <div class="tabs">
+                        <button class="tab active" data-tab="letters"    onclick="switchTab('letters')">💌 Letters</button>
+                        <button class="tab"         data-tab="lyrics"     onclick="switchTab('lyrics')">🎵 Lyrics</button>
+                        <button class="tab"         data-tab="things"     onclick="switchTab('things')">🌿 Little Things</button>
+                        <button class="tab"         data-tab="ifyouwere"  onclick="switchTab('ifyouwere')">✨ If You Were A...</button>
+                        <button class="tab"         data-tab="receipts"   onclick="switchTab('receipts')">🧾 Receipts</button>
                     </div>
                 </div>
             </div>
+        </nav>
 
-            <div class="confetti-container" id="confetti"></div>
-        </div>
-    </section>
+        <!-- LETTERS -->
+        <section id="letters" class="tab-section active">
+            <div class="section-header">
+                <span class="section-deco">✦</span>
+                <h2 class="section-title">Letters</h2>
+                <p class="section-subtitle">the annual formality, only to forget it tomorrow (except you definitely won't).</p>
+            </div>
+            <div class="cards-grid" id="lettersGrid"></div>
+        </section>
 
-    <!-- Gift Box Grid -->
-    <section id="gifts" class="gifts-section">
-        <div class="gifts-header">
-            <h2>Your Gift Boxes</h2>
-            <p>Click any box to open and explore</p>
-        </div>
-        <div class="gifts-grid" id="giftsGrid">
-            <!-- Dynamically populated -->
-        </div>
-    </section>
+        <!-- LYRICS -->
+        <section id="lyrics" class="tab-section">
+            <div class="section-header">
+                <span class="section-deco">✦</span>
+                <h2 class="section-title">Lyrics That Feel Like You</h2>
+                <p class="section-subtitle">songs we can no longer enjoy peacefully without you haunting the soundtrack.</p>
+            </div>
+            <div class="cards-grid" id="lyricsGrid"></div>
+        </section>
 
-    <!-- Modal for Gift Details -->
-    <div id="giftModal" class="modal">
+        <!-- LITTLE THINGS -->
+        <section id="things" class="tab-section">
+            <div class="section-header">
+                <span class="section-deco">✦</span>
+                <h2 class="section-title">Little Things</h2>
+                <p class="section-subtitle">a catalog of completely mundane things you've successfully claimed copyright over.</p>
+            </div>
+            <div class="things-grid" id="thingsGrid"></div>
+        </section>
+
+        <!-- IF YOU WERE A... -->
+        <section id="ifyouwere" class="tab-section">
+            <div class="section-header">
+                <span class="section-deco">✦</span>
+                <h2 class="section-title">If You Were A…</h2>
+                <p class="section-subtitle">we wasted precious minutes psychoanalyzing you into inanimate concepts. do not question the math.</p>
+            </div>
+            <div class="ifyouwere-grid" id="ifyouwereGrid"></div>
+        </section>
+
+        <!-- RECEIPTS -->
+        <section id="receipts" class="tab-section">
+            <div class="section-header">
+                <span class="section-deco">✦</span>
+                <h2 class="section-title">Receipts</h2>
+                <p class="section-subtitle">the paper trail. you can't gaslight us out of history.</p>
+            </div>
+            <div class="receipts-grid" id="receiptsGrid"></div>
+        </section>
+
+        <footer class="site-footer">
+            <p>curated with reluctant affection by ankita 🤎 — took actual effort, do not expect this next year.</p>
+            <p class="footer-sub">nov 19, 2025 · no refunds, no exchanges</p>
+        </footer>
+    </main>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal">
         <div class="modal-overlay" onclick="closeModal()"></div>
-        <div class="modal-content scrapbook-modal">
-            <button class="modal-close" onclick="closeModal()">✕</button>
-
-            <div class="modal-body">
-                <div class="gift-header">
-                    <h2 id="modalSender" class="sender-name">From Someone Special</h2>
-                    <p id="modalRelationship" class="relationship-tag"></p>
-                </div>
-
-                <div class="gift-message-section">
-                    <p id="modalMessage" class="gift-message"></p>
-                </div>
-
-                <div id="poemSection" class="poem-section" style="display: none;">
-                    <p id="modalPoem" class="poem-text"></p>
-                </div>
-
-                <div id="photosSection" class="photos-section" style="display: none;">
-                    <div id="photosGrid" class="photos-grid">
-                        <!-- Dynamically populated -->
-                    </div>
-                </div>
-
-                <div class="gift-footer">
-                    <p id="modalDate" class="gift-date"></p>
-                </div>
+        <div class="modal-box">
+            <div class="modal-top-bar">
+                <button class="modal-close" onclick="closeModal()">×</button>
             </div>
-
-            <div class="washi-tape washi-top-left"></div>
-            <div class="washi-tape washi-top-right"></div>
-            <div class="washi-tape washi-bottom-left"></div>
-            <div class="washi-tape washi-bottom-right"></div>
+            <div class="modal-body" id="modalBody"></div>
         </div>
-    </section>
+    </div>
 
     <script src="script.js"></script>
 </body>
