@@ -8,12 +8,14 @@ let lyricsData    = [];
 let thingsData    = [];
 let ifyouwereData = [];
 let receiptsData  = [];
+let isSafeMode    = localStorage.getItem('darp_safe_mode') === 'true';
 
 // ===========================
 // INIT
 // ===========================
 
 document.addEventListener('DOMContentLoaded', async () => {
+    updateSafeModeUI();
     await Promise.allSettled([
         loadLetters(),
         loadLyrics(),
@@ -137,7 +139,12 @@ function renderLetters() {
         if (isPapa) card.classList.add('is-special-papa-card');
 
         // Thumbnail priority: letter.thumbnail -> first photo in letter.photos -> fallback sticker
-        const thumbUrl = letter.thumbnail || (letter.photos && letter.photos.length > 0 ? letter.photos[0] : null);
+        let thumbUrl = letter.thumbnail || (letter.photos && letter.photos.length > 0 ? letter.photos[0] : null);
+
+        // Safe mode override for Rudra
+        if ((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode) {
+            thumbUrl = 'pics/rudra/WhatsApp Image 2026-11-20 at 8.17.48 PM.jpeg';
+        }
 
         const thumbPosition = letter.thumbnailPosition || 'center 20%';
         const coverHtml = thumbUrl
@@ -341,7 +348,13 @@ function openLetterModal(letter) {
     }
 
     // Only show the photos gallery inside the modal if the contributor has MULTIPLE photos!
-    const hasMultiplePhotos = letter.photos && letter.photos.length > 1;
+    let hasMultiplePhotos = letter.photos && letter.photos.length > 1;
+
+    // Safe mode override for Rudra: all media should disappear when clicked!
+    if ((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode) {
+        hasMultiplePhotos = false;
+    }
+
     const photosHtml = hasMultiplePhotos
         ? `<div class="modal-photos-header">
                 <span class="modal-photos-tag">📷 Photo Gallery (${letter.photos.length}) · tap photo to expand</span>
@@ -528,4 +541,41 @@ function esc(str) {
     return String(str)
         .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
         .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ===========================
+// SAFE MODE (SAFE WORD: VANILLA)
+// ===========================
+
+function toggleSafeMode() {
+    isSafeMode = !isSafeMode;
+    localStorage.setItem('darp_safe_mode', isSafeMode);
+    updateSafeModeUI();
+    renderLetters();
+    showToast(isSafeMode ? 'Safe mode enabled 🛡️ (vanilla)' : 'Safe mode disabled 🔓');
+}
+
+function updateSafeModeUI() {
+    const widget = document.getElementById('safeModeWidget');
+    const label = document.getElementById('safeLabel');
+    const icon = document.getElementById('safeIcon');
+    if (!widget || !label || !icon) return;
+    
+    if (isSafeMode) {
+        widget.classList.add('is-active');
+        icon.textContent = '🛡️';
+        label.textContent = 'safe mode: active (vanilla)';
+    } else {
+        widget.classList.remove('is-active');
+        icon.textContent = '🔒';
+        label.textContent = 'safe word: vanilla';
+    }
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
 }

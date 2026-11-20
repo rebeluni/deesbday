@@ -19,13 +19,45 @@
         <div class="landing-deco ld-4">🤎</div>
         <div class="landing-deco ld-5">✦</div>
 
-        <div class="landing-content">
-            <p class="landing-pretext">an annual contractual obligation</p>
-            <h1 class="landing-title">Happy Birthday,<br><em>Darp.</em></h1>
-            <p class="landing-subtitle">yearly formality complete, only to forget it tomorrow. you may now proceed.</p>
-            <button class="enter-btn" onclick="enterSite()">
-                claim your emotional tax <span class="enter-arrow">↓</span>
-            </button>
+        <!-- Landing Hero with Flanking Polaroids -->
+        <div class="landing-hero-wrapper">
+            <!-- Left polaroid stack flanking Happy Birthday text -->
+            <div class="hero-polaroids-flank flank-left">
+                <div class="hero-flank-card pol-left-top" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.03 PM.jpeg', 'the birthday girl ✦')">
+                    <div class="washi-tape-strip tape-angle-1"></div>
+                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.03%20PM.jpeg" alt="Darpita" loading="lazy">
+                    <p class="polaroid-tag">the birthday girl ✦</p>
+                </div>
+                <div class="hero-flank-card pol-left-bottom" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.02 PM (1).jpeg', 'effortless, obviously 🤎')">
+                    <div class="washi-tape-strip tape-angle-2"></div>
+                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.02%20PM%20(1).jpeg" alt="Darpita" loading="lazy">
+                    <p class="polaroid-tag">effortless 🤎</p>
+                </div>
+            </div>
+
+            <!-- Central Hero Title & CTA -->
+            <div class="landing-content">
+                <p class="landing-pretext">an annual contractual obligation</p>
+                <h1 class="landing-title">Happy Birthday,<br><em>Darp.</em></h1>
+                <p class="landing-subtitle">yearly formality complete, only to forget it tomorrow. you may now proceed.</p>
+                <button class="enter-btn" onclick="enterSite()">
+                    claim your emotional tax <span class="enter-arrow">↓</span>
+                </button>
+            </div>
+
+            <!-- Right polaroid stack flanking Happy Birthday text -->
+            <div class="hero-polaroids-flank flank-right">
+                <div class="hero-flank-card pol-right-top" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.30.14 PM (1).jpeg', 'certified main character 🌸')">
+                    <div class="washi-tape-strip tape-angle-2"></div>
+                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.30.14%20PM%20(1).jpeg" alt="Darpita" loading="lazy">
+                    <p class="polaroid-tag">main character 🌸</p>
+                </div>
+                <div class="hero-flank-card pol-right-bottom" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 8.01.43 PM (7).jpeg', 'birthday royalty 👑')">
+                    <div class="washi-tape-strip tape-center"></div>
+                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%208.01.43%20PM%20(7).jpeg" alt="Darpita" loading="lazy">
+                    <p class="polaroid-tag">birthday royalty 👑</p>
+                </div>
+            </div>
         </div>
 
         <!-- Scrapbook Photo Gallery of Darpita -->
@@ -268,6 +300,15 @@
             <div id="lightboxCaption" class="lightbox-caption"></div>
         </div>
     </div>
+
+    <!-- SAFE MODE DISCREET WIDGET -->
+    <div id="safeModeWidget" class="safe-mode-corner" onclick="toggleSafeMode()" title="Safe Mode Toggle (Safe Word: vanilla)">
+        <span class="safe-icon" id="safeIcon">🔒</span>
+        <span class="safe-label" id="safeLabel">safe word: vanilla</span>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast"></div>
 
     <script src="script.js"></script>
 </body>
