@@ -34,14 +34,64 @@ document.addEventListener('DOMContentLoaded', async () => {
 // DATA LOADING
 // ===========================
 
+const defaultIfYouWereAssignments = [
+    {
+        "category": "a time of day",
+        "answer": "golden hour",
+        "reason": "warm, fleeting, and somehow makes everything look better than it was before",
+        "image": "pics/if you were/time of day/golden-hour.jpg"
+    },
+    {
+        "category": "a season",
+        "answer": "spring",
+        "reason": "fresh, bright, and effortlessly bringing everything around you to life",
+        "image": "pics/if you were/season-spring/download (5).jpg"
+    },
+    {
+        "category": "a city",
+        "answer": "Santorini",
+        "reason": "sun-drenched, iconic, calm on the surface, and an absolute visual masterpiece",
+        "image": "pics/if you were/city-santorini/download (6).jpg"
+    },
+    {
+        "category": "a challenge",
+        "answer": "the kind you've already won before it starts",
+        "reason": "see: 'I'll sit here every day'",
+        "image": "pics/if you were/challenge/WhatsApp Image 2026-11-20 at 8.01.43 PM (2).jpeg"
+    },
+    {
+        "category": "a road",
+        "answer": "an unmarked one you'd take anyway",
+        "reason": "not because you know where it goes — but because the going is the point",
+        "image": "pics/if you were/road/daily-favorites-road.jpg"
+    },
+    {
+        "category": "a number",
+        "answer": "3",
+        "reason": "mulank solidarity 🤎",
+        "image": "pics/if you were/mulank/WhatsApp Image 2026-11-20 at 8.01.43 PM (2).jpeg"
+    },
+    {
+        "category": "a dream",
+        "answer": "a seaside villa with an NGO downstairs and an Airbnb upstairs",
+        "reason": "and i can already see it happening",
+        "image": "pics/if you were/dream/beach-sunset-dream.jpg"
+    },
+    {
+        "category": "a conversation",
+        "answer": "the 3-hour one where you forget to eat",
+        "reason": "deep, passionate, and somehow always about feminism, mythology, or capitalism",
+        "image": "pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.02 PM.jpeg"
+    }
+];
+
 async function loadLetters() {
     try {
-        let r = await fetch('./boxes.json');
-        if (!r.ok) r = await fetch('./sample-data.json');
+        let r = await fetch('./boxes.json?v=' + Date.now());
+        if (!r.ok) r = await fetch('./sample-data.json?v=' + Date.now());
         if (!r.ok) throw new Error('none');
         const data = await r.json();
         lettersData = data.boxes || [];
-        lettersData.sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
     } catch (e) {
         lettersData = [];
     }
@@ -49,7 +99,7 @@ async function loadLetters() {
 
 async function loadLyrics() {
     try {
-        const r = await fetch('./lyrics.json');
+        const r = await fetch('./lyrics.json?v=' + Date.now());
         if (!r.ok) throw new Error('none');
         const data = await r.json();
         lyricsData = data.lyrics || [];
@@ -60,7 +110,7 @@ async function loadLyrics() {
 
 async function loadThings() {
     try {
-        const r = await fetch('./things.json');
+        const r = await fetch('./things.json?v=' + Date.now());
         if (!r.ok) throw new Error('none');
         const data = await r.json();
         thingsData = data.contributors || [];
@@ -71,18 +121,23 @@ async function loadThings() {
 
 async function loadIfYouWere() {
     try {
-        const r = await fetch('./ifyouwereas.json');
-        if (!r.ok) throw new Error('none');
-        const data = await r.json();
-        ifyouwereData = data.entries || [];
+        const r = await fetch('./ifyouwereas.json?v=' + Date.now());
+        if (r.ok) {
+            const data = await r.json();
+            if (data.entries && data.entries.length && data.entries[0].assignments && data.entries[0].assignments.length) {
+                ifyouwereData = data.entries;
+                return;
+            }
+        }
     } catch (e) {
-        ifyouwereData = [];
+        console.warn('Fallback to default ifyouwere list', e);
     }
+    ifyouwereData = [{ assignments: defaultIfYouWereAssignments }];
 }
 
 async function loadReceipts() {
     try {
-        const r = await fetch('./receipts.json');
+        const r = await fetch('./receipts.json?v=' + Date.now());
         if (!r.ok) throw new Error('none');
         const data = await r.json();
         receiptsData = data.receipts || [];
@@ -123,20 +178,29 @@ function renderLetters() {
     const grid = document.getElementById('lettersGrid');
     if (!grid) return;
     grid.innerHTML = '';
-    if (!lettersData.length) {
+    
+    // Strict queue: Row 1 = Mom, Naina, Ankita | Row 2 = Rudra, Rishi, Atharva
+    // Papa's letter is completely removed from this normal queue and featured in the special tribute!
+    const targetOrder = ['Mummy', 'Naina', 'Ankita', 'Rudra', 'Rishi', 'Atharva'];
+    const displayLetters = [];
+    
+    targetOrder.forEach(name => {
+        const found = lettersData.find(l => l.sender === name);
+        if (found) displayLetters.push(found);
+    });
+
+    if (!displayLetters.length) {
         grid.innerHTML = emptyState('💌', 'Letters are on their way…', 'Check back soon.');
         return;
     }
-    lettersData.forEach((letter, i) => {
+
+    displayLetters.forEach((letter, i) => {
         const card = document.createElement('div');
         card.className = 'letter-card';
         card.style.animationDelay = `${i * 0.07}s`;
         const color   = letter.theme?.coverColor || '#F3E9D8';
         const sticker = letter.theme?.sticker     || '💌';
         const preview = (letter.message || '').substring(0, 95);
-
-        const isPapa = (letter.sender === 'Papa' || letter.id === 'box_001');
-        if (isPapa) card.classList.add('is-special-papa-card');
 
         // Thumbnail priority: letter.thumbnail -> first photo in letter.photos -> fallback sticker
         let thumbUrl = letter.thumbnail || (letter.photos && letter.photos.length > 0 ? letter.photos[0] : null);
@@ -157,14 +221,9 @@ function renderLetters() {
                 ${sticker}
                </div>`;
 
-        const specialBadgeHtml = isPapa
-            ? `<div class="letter-special-pill">✦ The Special One</div>`
-            : '';
-
         card.innerHTML = `
             ${coverHtml}
             <div class="letter-card-body">
-                ${specialBadgeHtml}
                 <div class="letter-sender">${esc(letter.sender || 'Someone Special')}</div>
                 ${letter.relationship ? `<div class="letter-relationship">${esc(letter.relationship)}</div>` : ''}
                 <div class="letter-preview">${esc(preview)}…</div>
@@ -266,26 +325,28 @@ function renderIfYouWere() {
     const grid = document.getElementById('ifyouwereGrid');
     if (!grid) return;
     grid.innerHTML = '';
-    if (!ifyouwereData.length) {
-        grid.innerHTML = emptyState('✨', 'Coming soon…', 'Check back soon.');
-        return;
-    }
     
-    // Gather all assignments from entries
-    const allAssignments = [];
-    ifyouwereData.forEach(entry => {
-        if (entry.assignments) allAssignments.push(...entry.assignments);
-    });
+    // Gather all assignments from entries, with guaranteed fallback
+    let allAssignments = [];
+    if (ifyouwereData && ifyouwereData.length) {
+        ifyouwereData.forEach(entry => {
+            if (entry.assignments) allAssignments.push(...entry.assignments);
+        });
+    }
+    if (!allAssignments.length) {
+        allAssignments = defaultIfYouWereAssignments;
+    }
 
     allAssignments.forEach((a, i) => {
         const card = document.createElement('div');
         card.className = 'ifyouwere-card';
         card.style.animationDelay = `${i * 0.06}s`;
 
-        const safeImgUrl = a.image ? (a.image.includes('%20') ? a.image : encodeURI(a.image)) : '';
-        const imgBoxHtml = a.image
+        const imgPath = a.image || '';
+        const safeImgUrl = imgPath.includes('%20') ? imgPath : encodeURI(imgPath);
+        const imgBoxHtml = imgPath
             ? `<div class="ifyouwere-img-box" onclick="openLightbox('${safeImgUrl}', 'If you were ${esc(a.category)} → ${esc(a.answer)}')">
-                <img src="${safeImgUrl}" alt="${esc(a.answer)}" loading="lazy" onerror="console.warn('Image failed to load:', this.src)">
+                <img src="${safeImgUrl}" alt="${esc(a.answer)}" loading="lazy">
                 <div class="ifyouwere-tag">if you were ${esc(a.category)}</div>
                </div>`
             : `<div class="ifyouwere-tag-plain">if you were ${esc(a.category)}</div>`;

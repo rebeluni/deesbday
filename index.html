@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>for darp, with love 🤎</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=4.0">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -19,122 +19,28 @@
         <div class="landing-deco ld-4">🤎</div>
         <div class="landing-deco ld-5">✦</div>
 
-        <!-- Landing Hero with Flanking Polaroids -->
-        <div class="landing-hero-wrapper">
-            <!-- Left polaroid stack flanking Happy Birthday text -->
-            <div class="hero-polaroids-flank flank-left">
-                <div class="hero-flank-card pol-left-top" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.03 PM.jpeg', 'the birthday girl ✦')">
-                    <div class="washi-tape-strip tape-angle-1"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.03%20PM.jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">the birthday girl ✦</p>
-                </div>
-                <div class="hero-flank-card pol-left-bottom" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.02 PM (1).jpeg', 'effortless, obviously 🤎')">
-                    <div class="washi-tape-strip tape-angle-2"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.02%20PM%20(1).jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">effortless 🤎</p>
-                </div>
-            </div>
-
-            <!-- Central Hero Title & CTA -->
-            <div class="landing-content">
-                <p class="landing-pretext">an annual contractual obligation</p>
-                <h1 class="landing-title">Happy Birthday,<br><em>Darp.</em></h1>
-                <p class="landing-subtitle">yearly formality complete, only to forget it tomorrow. you may now proceed.</p>
-                <button class="enter-btn" onclick="enterSite()">
-                    claim your emotional tax <span class="enter-arrow">↓</span>
-                </button>
-            </div>
-
-            <!-- Right polaroid stack flanking Happy Birthday text -->
-            <div class="hero-polaroids-flank flank-right">
-                <div class="hero-flank-card pol-right-top" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.30.14 PM (1).jpeg', 'certified main character 🌸')">
-                    <div class="washi-tape-strip tape-angle-2"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.30.14%20PM%20(1).jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">main character 🌸</p>
-                </div>
-                <div class="hero-flank-card pol-right-bottom" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 8.01.43 PM (7).jpeg', 'birthday royalty 👑')">
-                    <div class="washi-tape-strip tape-center"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%208.01.43%20PM%20(7).jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">birthday royalty 👑</p>
-                </div>
-            </div>
+        <!-- Left Polaroid of Darpita -->
+        <div class="landing-polaroid polaroid-hero-left" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.03 PM.jpeg', 'the birthday girl ✦')">
+            <div class="washi-tape-strip tape-angle-1"></div>
+            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.03%20PM.jpeg" alt="Darpita" style="width: 100%; height: 210px; object-fit: cover; border-radius: 4px; display: block;" loading="lazy">
+            <p class="polaroid-tag">the birthday girl ✦</p>
         </div>
 
-        <!-- Scrapbook Photo Gallery of Darpita -->
-        <div class="landing-scrapbook">
-            <div class="scrapbook-header">
-                <span class="scrapbook-badge">✦ EXHIBIT A: THE ARCHIVES ✦</span>
-                <h2 class="scrapbook-heading">Certified Main Character Energy</h2>
-                <p class="scrapbook-sub">photographic evidence of your finest angles (click or tap any polaroid)</p>
-            </div>
-            
-            <div class="scrapbook-grid">
-                <div class="scrapbook-polaroid tilt-1" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.30.14 PM (1).jpeg', 'unapologetic main character ✦')">
-                    <div class="washi-tape-strip tape-angle-1"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.30.14%20PM%20(1).jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">main character energy ✦</p>
-                </div>
+        <!-- Center Text -->
+        <div class="landing-content">
+            <p class="landing-pretext">an annual contractual obligation</p>
+            <h1 class="landing-title">Happy Birthday,<br><em>Darp.</em></h1>
+            <p class="landing-subtitle">yearly formality complete, only to forget it tomorrow. you may now proceed.</p>
+            <button class="enter-btn" onclick="enterSite()">
+                claim your emotional tax <span class="enter-arrow">↓</span>
+            </button>
+        </div>
 
-                <div class="scrapbook-polaroid tilt-2" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.30.14 PM.jpeg', 'the standard has been set 🌸')">
-                    <div class="washi-tape-strip tape-angle-2"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.30.14%20PM.jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">standard = set 🌸</p>
-                </div>
-
-                <div class="scrapbook-polaroid tilt-3" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.02 PM (1).jpeg', 'effortless, obviously 🤎')">
-                    <div class="washi-tape-strip tape-angle-3"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.02%20PM%20(1).jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">effortless, obviously 🤎</p>
-                </div>
-
-                <div class="scrapbook-polaroid tilt-4" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.02 PM.jpeg', 'serving looks, zero apologies ✨')">
-                    <div class="washi-tape-strip tape-angle-1"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.02%20PM.jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">zero apologies ✨</p>
-                </div>
-
-                <div class="scrapbook-polaroid tilt-5" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.03 PM (1).jpeg', 'golden hour certified 🌅')">
-                    <div class="washi-tape-strip tape-angle-2"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.03%20PM%20(1).jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">golden hour certified 🌅</p>
-                </div>
-
-                <div class="scrapbook-polaroid tilt-6" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.03 PM.jpeg', 'the birthday girl herself 📷')">
-                    <div class="washi-tape-strip tape-angle-3"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.03%20PM.jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">the birthday girl 📷</p>
-                </div>
-
-                <div class="scrapbook-polaroid tilt-7" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.04 PM (1).jpeg', 'soft smile, lethal opinions 💫')">
-                    <div class="washi-tape-strip tape-angle-1"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.04%20PM%20(1).jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">lethal opinions 💫</p>
-                </div>
-
-                <div class="scrapbook-polaroid tilt-8" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.04 PM.jpeg', 'casually running the show 💅')">
-                    <div class="washi-tape-strip tape-angle-2"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.04%20PM.jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">running the show 💅</p>
-                </div>
-
-                <div class="scrapbook-polaroid tilt-9" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.06 PM.jpeg', 'aura on maximum 🕯️')">
-                    <div class="washi-tape-strip tape-angle-3"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.06%20PM.jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">aura on max 🕯️</p>
-                </div>
-
-                <div class="scrapbook-polaroid tilt-10" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.50.23 PM.jpeg', 'naturally glowing ✨')">
-                    <div class="washi-tape-strip tape-angle-1"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.50.23%20PM.jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">naturally glowing ✨</p>
-                </div>
-
-                <div class="scrapbook-polaroid tilt-11" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 8.01.43 PM (7).jpeg', 'birthday royalty behavior 👑')">
-                    <div class="washi-tape-strip tape-angle-2"></div>
-                    <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%208.01.43%20PM%20(7).jpeg" alt="Darpita" loading="lazy">
-                    <p class="polaroid-tag">birthday royalty 👑</p>
-                </div>
-            </div>
+        <!-- Right Polaroid of Darpita -->
+        <div class="landing-polaroid polaroid-hero-right" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.30.14 PM (1).jpeg', 'certified main character 🌸')">
+            <div class="washi-tape-strip tape-angle-2"></div>
+            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.30.14%20PM%20(1).jpeg" alt="Darpita" style="width: 100%; height: 210px; object-fit: cover; border-radius: 4px; display: block;" loading="lazy">
+            <p class="polaroid-tag">main character 🌸</p>
         </div>
     </section>
 
@@ -310,6 +216,6 @@
     <!-- TOAST NOTIFICATION -->
     <div id="toast" class="toast"></div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=4.0"></script>
 </body>
 </html>
