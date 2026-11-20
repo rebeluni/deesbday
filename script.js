@@ -665,7 +665,16 @@ let isAudioPlaying = false;
 function initBgMusic() {
     bgAudio = document.getElementById('bgAudio');
     if (!bgAudio) return;
+    
+    // Always volume comfortable and looping
     bgAudio.volume = 0.45;
+    bgAudio.loop = true;
+
+    // Bulletproof loop restart: if audio ends, rewind and replay
+    bgAudio.addEventListener('ended', () => {
+        bgAudio.currentTime = 0;
+        bgAudio.play().catch(() => {});
+    });
 
     bgAudio.addEventListener('play', () => {
         isAudioPlaying = true;
@@ -676,30 +685,35 @@ function initBgMusic() {
         updateMusicUI();
     });
 
-    const userMuted = localStorage.getItem('darp_music_muted') === 'true';
+    // Reset any old muted state so music is ALWAYS ON BY DEFAULT
+    localStorage.removeItem('darp_music_muted');
 
-    if (!userMuted) {
-        const playPromise = bgAudio.play();
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
+    const tryPlay = () => {
+        if (!bgAudio) bgAudio = document.getElementById('bgAudio');
+        if (!bgAudio) return;
+        if (bgAudio.paused) {
+            bgAudio.play().then(() => {
                 isAudioPlaying = true;
                 updateMusicUI();
             }).catch(() => {
                 updateMusicUI();
             });
         }
-    }
-
-    const startAudioOnFirstGesture = () => {
-        playBgMusicIfAllowed();
-        document.removeEventListener('click', startAudioOnFirstGesture);
-        document.removeEventListener('keydown', startAudioOnFirstGesture);
-        document.removeEventListener('touchstart', startAudioOnFirstGesture);
     };
 
-    document.addEventListener('click', startAudioOnFirstGesture, { once: true });
-    document.addEventListener('keydown', startAudioOnFirstGesture, { once: true });
-    document.addEventListener('touchstart', startAudioOnFirstGesture, { once: true });
+    // 1. Attempt playback immediately on page load
+    tryPlay();
+
+    // 2. Also start on any first user gesture (click, touch, scroll, keydown)
+    const gestureEvents = ['click', 'touchstart', 'scroll', 'keydown'];
+    const handleFirstGesture = () => {
+        tryPlay();
+        gestureEvents.forEach(evt => window.removeEventListener(evt, handleFirstGesture));
+    };
+
+    gestureEvents.forEach(evt => {
+        window.addEventListener(evt, handleFirstGesture, { once: true, passive: true });
+    });
 
     updateMusicUI();
 }
@@ -707,7 +721,6 @@ function initBgMusic() {
 function playBgMusicIfAllowed() {
     if (!bgAudio) bgAudio = document.getElementById('bgAudio');
     if (!bgAudio) return;
-    if (localStorage.getItem('darp_music_muted') === 'true') return;
 
     if (bgAudio.paused) {
         bgAudio.play().then(() => {
@@ -724,7 +737,6 @@ function toggleMusic() {
     if (bgAudio.paused) {
         bgAudio.play().then(() => {
             isAudioPlaying = true;
-            localStorage.setItem('darp_music_muted', 'false');
             updateMusicUI();
             showToast('Music playing 🎵');
         }).catch(err => {
@@ -733,7 +745,6 @@ function toggleMusic() {
     } else {
         bgAudio.pause();
         isAudioPlaying = false;
-        localStorage.setItem('darp_music_muted', 'true');
         updateMusicUI();
         showToast('Music muted 🔇');
     }
