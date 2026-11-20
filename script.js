@@ -133,6 +133,9 @@ function renderLetters() {
         const sticker = letter.theme?.sticker     || '💌';
         const preview = (letter.message || '').substring(0, 95);
 
+        const isPapa = (letter.sender === 'Papa' || letter.id === 'box_001');
+        if (isPapa) card.classList.add('is-special-papa-card');
+
         // Thumbnail priority: letter.thumbnail -> first photo in letter.photos -> fallback sticker
         const thumbUrl = letter.thumbnail || (letter.photos && letter.photos.length > 0 ? letter.photos[0] : null);
 
@@ -147,9 +150,14 @@ function renderLetters() {
                 ${sticker}
                </div>`;
 
+        const specialBadgeHtml = isPapa
+            ? `<div class="letter-special-pill">✦ The Special One</div>`
+            : '';
+
         card.innerHTML = `
             ${coverHtml}
             <div class="letter-card-body">
+                ${specialBadgeHtml}
                 <div class="letter-sender">${esc(letter.sender || 'Someone Special')}</div>
                 ${letter.relationship ? `<div class="letter-relationship">${esc(letter.relationship)}</div>` : ''}
                 <div class="letter-preview">${esc(preview)}…</div>
@@ -267,9 +275,10 @@ function renderIfYouWere() {
         card.className = 'ifyouwere-card';
         card.style.animationDelay = `${i * 0.06}s`;
 
+        const safeImgUrl = a.image ? (a.image.includes('%20') ? a.image : encodeURI(a.image)) : '';
         const imgBoxHtml = a.image
-            ? `<div class="ifyouwere-img-box" onclick="openLightbox('${encodeURI(a.image)}', 'If you were ${esc(a.category)} → ${esc(a.answer)}')">
-                <img src="${encodeURI(a.image)}" alt="${esc(a.answer)}" loading="lazy">
+            ? `<div class="ifyouwere-img-box" onclick="openLightbox('${safeImgUrl}', 'If you were ${esc(a.category)} → ${esc(a.answer)}')">
+                <img src="${safeImgUrl}" alt="${esc(a.answer)}" loading="lazy" onerror="console.warn('Image failed to load:', this.src)">
                 <div class="ifyouwere-tag">if you were ${esc(a.category)}</div>
                </div>`
             : `<div class="ifyouwere-tag-plain">if you were ${esc(a.category)}</div>`;
@@ -315,7 +324,22 @@ function renderReceipts() {
 // MODALS
 // ===========================
 
+function openLetterModalById(id) {
+    const letter = lettersData.find(l => l.id === id);
+    if (letter) openLetterModal(letter);
+}
+
 function openLetterModal(letter) {
+    const isPapa = (letter.sender === 'Papa' || letter.id === 'box_001');
+    const modalBox = document.querySelector('.modal-box');
+    if (modalBox) {
+        if (isPapa) {
+            modalBox.classList.add('is-papa-modal');
+        } else {
+            modalBox.classList.remove('is-papa-modal');
+        }
+    }
+
     // Only show the photos gallery inside the modal if the contributor has MULTIPLE photos!
     const hasMultiplePhotos = letter.photos && letter.photos.length > 1;
     const photosHtml = hasMultiplePhotos
@@ -333,17 +357,76 @@ function openLetterModal(letter) {
             }).join('')}
            </div>` : '';
 
-    const poemHtml = letter.poem
-        ? `<div class="modal-poem">${esc(letter.poem)}</div>` : '';
+    let contentHtml = '';
 
-    document.getElementById('modalBody').innerHTML = `
-        <div class="modal-sender">${esc(letter.sender || 'Someone Special')}</div>
-        ${letter.relationship ? `<div class="modal-relationship">${esc(letter.relationship)}</div>` : ''}
-        <p class="modal-message">${esc(letter.message || '')}</p>
-        ${poemHtml}
-        ${photosHtml}
-        <div class="modal-date">${formatDate(letter.date)}</div>`;
+    if (isPapa) {
+        const poemHtml = letter.poem
+            ? `<div class="papa-poem-container">
+                   <div class="papa-poem-banner">✦ A Father's Eternal Blessing ✦</div>
+                   <div class="papa-poem-text">${esc(letter.poem)}</div>
+               </div>`
+            : '';
 
+        contentHtml = `
+            <div class="papa-modal-header">
+                <div class="papa-celestial-badge">
+                    <span class="badge-icon">🕊️</span>
+                    <span>WRITTEN FROM THE STARS · FOREVER WITH YOU</span>
+                </div>
+                <div class="modal-sender papa-title">Papa 💙</div>
+                <div class="modal-relationship papa-subtitle">Always in your heart, every single step</div>
+            </div>
+
+            <div class="papa-letter-body">
+                <p class="papa-opening">Nannu beta,<br><strong>Janmadin bohot bohot mubarak ho meri bachi. ❤️</strong></p>
+                
+                <div class="papa-quote-callout">
+                    <span class="papa-star-glyph">✦</span>
+                    <p class="papa-quote-line">“Main dekh raha hoon tujhe. Har ek pal, har ek kadam pe main bilkul tere saath hoon. Kabhi yeh mat sochna ki Papa door hain—main tere aas-paas hi hoon, teri har muskaan mein, teri har himmat mein, aur tere aage aane wali har ek rukawat aur mushkil ko hatane ke liye.”</p>
+                </div>
+
+                <p class="papa-main-paragraph">Mujhe tujhpar bohot, bohot zyada garv hai meri gudiya. Tu kitni samajhdar, kitni bahadur aur kitni shaandar beti ban rahi hai. Zindagi mein jo bhi tu karna chahti hai, bina dare aage badhna. Mujhe tujhpar poora vishwas hai, aur main chahta hoon ki tu bhi khudpar utna hi vishwas rakhe. Tu har cheez sambhal legi, aur bohot aage jayegi.</p>
+
+                <div class="papa-rules-box">
+                    <div class="rules-header">✨ Papa's Essential Instructions:</div>
+                    <ul class="rules-list">
+                        <li><strong>Mummy ko zyada satana mat!</strong> Unka dhyaan rakhna, unko hamesha khush rakhna.</li>
+                        <li><strong>Naina ka dhyaan rakhna</strong>, uski taakat banke rehna.</li>
+                        <li><strong>Aur in sabse bhi zaroori—apna khudka dhyaan rakhna.</strong> Khana time pe khana, khush rehna, aur hamesha aise hi chamakna.</li>
+                    </ul>
+                </div>
+
+                <p class="papa-closing-paragraph">Mera aashirwad aur mera dher saara pyaar hamesha, har pal tere saath hai. Tu meri sabse badi khushi hai.</p>
+
+                <div class="papa-signoff-row">
+                    <span class="papa-signoff-lead">Hamesha tera,</span>
+                    <span class="papa-signoff-name">Papa 💙</span>
+                </div>
+
+                ${poemHtml}
+                ${photosHtml}
+
+                <div class="papa-bottom-disclaimer">
+                    <span class="disclaimer-heart">🕊️</span>
+                    <span>Told you you weren't ready. Now go give Mummy & Naina a huge hug.</span>
+                </div>
+            </div>
+            <div class="modal-date">${formatDate(letter.date)}</div>
+        `;
+    } else {
+        const poemHtml = letter.poem
+            ? `<div class="modal-poem">${esc(letter.poem)}</div>` : '';
+        contentHtml = `
+            <div class="modal-sender">${esc(letter.sender || 'Someone Special')}</div>
+            ${letter.relationship ? `<div class="modal-relationship">${esc(letter.relationship)}</div>` : ''}
+            <p class="modal-message">${esc(letter.message || '')}</p>
+            ${poemHtml}
+            ${photosHtml}
+            <div class="modal-date">${formatDate(letter.date)}</div>
+        `;
+    }
+
+    document.getElementById('modalBody').innerHTML = contentHtml;
     openModal();
     if (!letter._opened) { triggerConfetti(); letter._opened = true; }
 }

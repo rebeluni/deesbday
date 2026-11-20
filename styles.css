@@ -1420,3 +1420,407 @@ body {
     .ribbon-polaroid { width: 140px; padding: 8px 8px 12px; }
     .ribbon-polaroid img { height: 140px; }
 }
+
+/* ===========================
+   PAPA / UNCLE SPECIAL MENTION & FORMATTING
+   =========================== */
+
+/* Grid card highlight */
+.letter-card.is-special-papa-card {
+    border: 1.5px solid rgba(201, 168, 108, 0.65);
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAF5EE 100%);
+    box-shadow: 0 8px 24px rgba(160, 120, 80, 0.12);
+}
+.letter-card.is-special-papa-card:hover {
+    border-color: var(--brown-300);
+    box-shadow: 0 16px 36px rgba(160, 120, 80, 0.22);
+}
+
+.letter-special-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brown-500);
+    background: linear-gradient(135deg, #FDF7EB 0%, #F5E8D0 100%);
+    border: 1px solid rgba(201, 168, 108, 0.5);
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    margin-bottom: 0.5rem;
+    width: fit-content;
+}
+
+/* Dedicated Special Mention Section at end of Letters */
+.special-letter-mention {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--beige-300);
+}
+
+.special-mention-card {
+    position: relative;
+    background: linear-gradient(145deg, #FFFDF9 0%, #F8EFE3 55%, #F0DEC5 100%);
+    border: 1.5px solid rgba(201, 168, 108, 0.55);
+    border-radius: 20px;
+    padding: 2.8rem 2.2rem 2.4rem;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 14px 40px rgba(80, 50, 30, 0.09);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.special-mention-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 22px 50px rgba(80, 50, 30, 0.16);
+    border-color: var(--brown-300);
+}
+
+/* Ambient glow & pulsing aura */
+.special-card-aura {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 380px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201, 168, 108, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+    animation: auraPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes auraPulse {
+    0% { transform: translateX(-50%) scale(0.9); opacity: 0.6; }
+    100% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+}
+
+/* Floating sparkles */
+.special-sparkle {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.7;
+    animation: sparkleFloat 5s ease-in-out infinite;
+}
+.sp-1 { top: 18px; left: 24px; font-size: 1.4rem; animation-delay: 0s; }
+.sp-2 { top: 22px; right: 28px; font-size: 1.2rem; color: var(--brown-300); animation-delay: 1.5s; }
+.sp-3 { bottom: 20px; left: 30px; font-size: 1.5rem; animation-delay: 2.5s; }
+.sp-4 { bottom: 24px; right: 26px; font-size: 1.2rem; color: var(--brown-300); animation-delay: 3.5s; }
+
+@keyframes sparkleFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(12deg); }
+}
+
+.special-badge-pill {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown-400);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(201, 168, 108, 0.5);
+    padding: 0.4rem 1.1rem;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(4px);
+}
+
+.special-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4.5vw, 2.7rem);
+    font-weight: 400;
+    color: var(--brown-500);
+    margin: 0 0 0.8rem;
+    line-height: 1.15;
+}
+
+.special-card-disclaimer {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    max-width: 580px;
+    margin: 0 auto 2rem;
+    line-height: 1.55;
+    font-style: italic;
+}
+
+.special-sender-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4rem;
+    max-width: 540px;
+    margin: 0 auto 2rem;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(212, 191, 160, 0.5);
+    border-radius: 16px;
+    padding: 1rem 1.3rem;
+    backdrop-filter: blur(4px);
+}
+
+.special-avatar-container {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    flex-shrink: 0;
+}
+
+.special-avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFFDF9;
+    box-shadow: 0 4px 12px rgba(60, 36, 21, 0.15);
+}
+
+.special-avatar-halo {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(201, 168, 108, 0.7);
+    animation: haloRotate 12s linear infinite;
+}
+
+@keyframes haloRotate {
+    100% { transform: rotate(360deg); }
+}
+
+.special-info-col {
+    flex: 1;
+}
+
+.special-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--brown-500);
+    line-height: 1.1;
+}
+
+.special-role {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--brown-300);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+}
+
+.special-quote {
+    font-size: 0.85rem;
+    color: var(--brown-400);
+    font-style: italic;
+    line-height: 1.35;
+}
+
+.special-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.85rem 2.2rem;
+    background: var(--brown-400);
+    color: var(--cream);
+    border-radius: 100px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border: none;
+    box-shadow: 0 4px 14px rgba(60, 36, 21, 0.15);
+    transition: all 0.3s ease;
+}
+
+.special-mention-card:hover .special-action-btn {
+    background: var(--brown-500);
+    transform: scale(1.04);
+    box-shadow: 0 6px 18px rgba(60, 36, 21, 0.22);
+}
+
+/* Modal formatting for Papa */
+.modal-box.is-papa-modal {
+    border: 2px solid rgba(201, 168, 108, 0.5);
+    background: linear-gradient(180deg, #FFFCF7 0%, #FAF5EE 100%);
+    box-shadow: 0 25px 65px rgba(60, 36, 21, 0.25), 0 0 45px rgba(201, 168, 108, 0.2);
+}
+
+.papa-modal-header {
+    text-align: center;
+    padding-bottom: 1.4rem;
+    margin-bottom: 1.6rem;
+    border-bottom: 1px solid var(--beige-200);
+}
+
+.papa-celestial-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brown-400);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(201, 168, 108, 0.45);
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 0.8rem;
+}
+
+.papa-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: var(--brown-500);
+    margin-bottom: 0.2rem;
+}
+
+.papa-subtitle {
+    font-size: 0.85rem;
+    color: var(--brown-300);
+    font-style: italic;
+}
+
+.papa-letter-body {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: var(--text-primary);
+}
+
+.papa-opening {
+    font-size: 1.15rem;
+    color: var(--brown-500);
+    margin-bottom: 1.4rem;
+}
+
+.papa-quote-callout {
+    position: relative;
+    background: linear-gradient(135deg, rgba(253, 247, 235, 0.9) 0%, rgba(245, 232, 208, 0.6) 100%);
+    border-left: 3.5px solid var(--brown-300);
+    border-radius: 0 12px 12px 0;
+    padding: 1.2rem 1.4rem;
+    margin: 1.4rem 0 1.8rem;
+}
+
+.papa-quote-callout .papa-star-glyph {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    color: var(--brown-300);
+    font-size: 1rem;
+    opacity: 0.6;
+}
+
+.papa-quote-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.28rem;
+    font-style: italic;
+    color: var(--brown-500);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.papa-main-paragraph {
+    margin-bottom: 1.6rem;
+    color: #4A3525;
+}
+
+.papa-rules-box {
+    background: #FFFFFF;
+    border: 1px solid var(--beige-200);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    margin: 1.6rem 0;
+    box-shadow: 0 4px 14px rgba(60, 36, 21, 0.05);
+}
+
+.papa-rules-box .rules-header {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--brown-400);
+    margin-bottom: 0.6rem;
+}
+
+.papa-rules-box .rules-list {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.papa-rules-box .rules-list li {
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.papa-rules-box .rules-list li:last-child {
+    margin-bottom: 0;
+}
+
+.papa-closing-paragraph {
+    margin: 1.6rem 0 1.2rem;
+    font-size: 1.05rem;
+    color: var(--brown-500);
+}
+
+.papa-signoff-row {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    color: var(--brown-400);
+    margin-bottom: 2rem;
+    line-height: 1.2;
+}
+
+.papa-signoff-lead {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--brown-300);
+}
+
+.papa-poem-container {
+    background: linear-gradient(145deg, #FAF4EB 0%, #F5ECE0 100%);
+    border: 1px solid rgba(201, 168, 108, 0.45);
+    border-radius: 14px;
+    padding: 1.6rem 1.4rem;
+    margin: 2rem 0;
+    text-align: center;
+    position: relative;
+}
+
+.papa-poem-banner {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brown-300);
+    font-weight: 600;
+    margin-bottom: 0.9rem;
+}
+
+.papa-poem-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--brown-500);
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.papa-bottom-disclaimer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: var(--brown-300);
+    margin-top: 1.8rem;
+    text-align: center;
+    padding-top: 1.2rem;
+    border-top: 1px dashed var(--beige-200);
+}
