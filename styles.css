@@ -312,11 +312,61 @@ body {
 }
 
 .letter-card-cover {
-    height: 155px;
+    height: 245px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 3.6rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--beige-100);
+}
+
+.letter-card-cover.has-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.letter-card:hover .letter-card-cover.has-image img {
+    transform: scale(1.07);
+}
+
+.letter-cover-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    box-shadow: 0 4px 12px rgba(60, 36, 21, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    z-index: 2;
+}
+
+.modal-photos-header {
+    margin-bottom: 0.9rem;
+}
+
+.modal-photos-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--brown-300);
+    background: var(--beige-100);
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
 }
 
 .letter-card-body { padding: 1.5rem; }
@@ -719,25 +769,111 @@ body {
     margin-bottom: 2rem;
 }
 .modal-photo {
-    aspect-ratio: 1;
+    aspect-ratio: 4 / 5;
     border-radius: var(--radius-sm);
     overflow: hidden;
     background: var(--beige-100);
     position: relative;
+    cursor: zoom-in;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.modal-photo:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow-md);
+}
+.modal-photo.is-landscape {
+    grid-column: span 2;
+    aspect-ratio: 16 / 10;
+}
+.modal-photo.is-landscape img {
+    object-position: center top !important;
 }
 .modal-photo img {
     width: 100%; height: 100%;
     object-fit: cover;
+    object-position: center 20%;
     display: block;
 }
 .modal-photo-caption {
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    background: linear-gradient(to top, rgba(44,26,14,.65) 0%, transparent 100%);
+    background: linear-gradient(to top, rgba(44,26,14,.75) 0%, transparent 100%);
     color: white;
-    font-size: .72rem;
-    padding: .6rem .5rem .4rem;
+    font-size: .75rem;
+    padding: .8rem .6rem .45rem;
     text-align: center;
+    font-weight: 500;
+}
+
+/* ===========================
+   LIGHTBOX FOR FULL PHOTOS
+   =========================== */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(44, 26, 14, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    cursor: zoom-out;
+    animation: fadeIn 0.2s ease;
+}
+.lightbox.active {
+    display: flex;
+}
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+}
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    background: var(--cream);
+}
+.lightbox-caption {
+    margin-top: 0.9rem;
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    backdrop-filter: blur(4px);
+}
+.lightbox-close {
+    position: absolute;
+    top: -44px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.25);
+    border: none;
+    color: white;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+.lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.45);
 }
 .modal-date {
     font-size: .78rem;
@@ -818,72 +954,234 @@ body {
 
 .ifyouwere-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.8rem;
 }
 
 .ifyouwere-card {
     background: var(--warm-white);
     border-radius: var(--radius);
     border: 1px solid var(--beige-200);
-    padding: 2rem;
+    overflow: hidden;
+    padding: 0;
     animation: cardFadeIn .5s ease both;
-    transition: all .3s ease;
+    transition: all .35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
 }
 .ifyouwere-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     box-shadow: var(--shadow-md);
+    border-color: var(--beige-300);
 }
 
-.ifyouwere-card-header { margin-bottom: 1.6rem; }
-.ifyouwere-sender {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.35rem;
+.ifyouwere-img-box {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    background: var(--beige-100);
+    cursor: zoom-in;
+}
+.ifyouwere-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+.ifyouwere-card:hover .ifyouwere-img-box img {
+    transform: scale(1.07);
+}
+
+.ifyouwere-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(44, 26, 14, 0.72);
+    color: var(--cream);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    font-size: 0.72rem;
     font-weight: 500;
-    color: var(--brown-500);
-    margin-bottom: .2rem;
-}
-.ifyouwere-relationship {
-    font-size: .72rem;
-    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: .05em;
+    letter-spacing: 0.06em;
+    padding: 0.32rem 0.85rem;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    z-index: 2;
 }
 
-.ifyouwere-item {
-    padding: .85rem 0;
-    border-bottom: 1px solid var(--beige-50);
+.ifyouwere-tag-plain {
+    padding: 1.4rem 1.6rem 0.4rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--brown-200);
+    font-weight: 600;
 }
-.ifyouwere-item:last-child { border-bottom: none; }
 
-.ifyouwere-row {
+.ifyouwere-card-body {
+    padding: 1.4rem 1.6rem 1.6rem;
+    flex: 1;
     display: flex;
-    align-items: baseline;
-    gap: .6rem;
-    flex-wrap: wrap;
-    margin-bottom: .3rem;
+    flex-direction: column;
+    justify-content: space-between;
 }
-.ifyouwere-category {
-    font-size: .72rem;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    color: var(--text-muted);
-    white-space: nowrap;
-    flex-shrink: 0;
-}
+
 .ifyouwere-answer {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem;
-    font-style: italic;
-    color: var(--brown-400);
-    line-height: 1.3;
+    font-size: 1.55rem;
+    font-weight: 500;
+    color: var(--brown-500);
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
 }
+
 .ifyouwere-reason {
-    font-size: .8rem;
+    font-size: 0.88rem;
     color: var(--text-secondary);
+    line-height: 1.55;
     font-style: italic;
-    line-height: 1.4;
-    padding-left: 0;
+}
+
+/* ===========================
+   LANDING POLAROIDS
+   =========================== */
+
+.landing-polaroid {
+    position: absolute;
+    background: white;
+    padding: 9px 9px 14px;
+    border-radius: 6px;
+    box-shadow: 0 14px 38px rgba(60, 36, 21, 0.16);
+    width: 170px;
+    z-index: 10;
+    cursor: zoom-in;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid var(--beige-200);
+}
+
+.landing-polaroid img {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+}
+
+.polaroid-tag {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    text-align: center;
+    color: var(--brown-400);
+    margin-top: 8px;
+    line-height: 1.1;
+}
+
+.polaroid-hero-left {
+    left: 5%;
+    top: 25%;
+    transform: rotate(-6deg);
+}
+.polaroid-hero-left:hover {
+    transform: rotate(-1deg) scale(1.08);
+    z-index: 30;
+    box-shadow: var(--shadow-lg);
+}
+
+.polaroid-hero-right {
+    right: 5%;
+    bottom: 22%;
+    transform: rotate(6deg);
+}
+.polaroid-hero-right:hover {
+    transform: rotate(1deg) scale(1.08);
+    z-index: 30;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Washi tape */
+.washi-tape-strip {
+    position: absolute;
+    background: rgba(212, 191, 160, 0.7);
+    backdrop-filter: blur(2px);
+    height: 18px;
+    width: 60px;
+    z-index: 5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+.tape-center {
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.tape-angle-1 {
+    top: -9px;
+    left: 18px;
+    transform: rotate(-8deg);
+}
+.tape-angle-2 {
+    top: -9px;
+    right: 18px;
+    transform: rotate(9deg);
+}
+
+/* ===========================
+   DARPITA GALLERY RIBBON
+   =========================== */
+
+.darpita-gallery-strip {
+    padding: 4.5rem 2rem 5.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid var(--beige-200);
+}
+
+.polaroid-ribbon {
+    display: flex;
+    gap: 1.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1.5rem 0;
+}
+
+.ribbon-polaroid {
+    background: white;
+    padding: 10px 10px 16px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    width: 175px;
+    position: relative;
+    cursor: zoom-in;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid var(--beige-200);
+}
+.ribbon-polaroid img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+}
+.ribbon-caption {
+    display: block;
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: var(--brown-400);
+    text-align: center;
+    margin-top: 8px;
+}
+
+.rp-1 { transform: rotate(-4deg); }
+.rp-2 { transform: rotate(3deg); }
+.rp-3 { transform: rotate(-2deg); }
+.rp-4 { transform: rotate(4deg); }
+.rp-5 { transform: rotate(-3deg); }
+
+.ribbon-polaroid:hover {
+    transform: rotate(0deg) translateY(-8px) scale(1.08);
+    z-index: 10;
+    box-shadow: var(--shadow-lg);
 }
 
 /* ===========================
@@ -964,6 +1262,10 @@ body {
    RESPONSIVE
    =========================== */
 
+@media (max-width: 960px) {
+    .landing-polaroid { display: none; }
+}
+
 @media (max-width: 700px) {
     .tab-nav-inner { padding: 0 1rem; }
     .site-wordmark { display: none; }
@@ -976,4 +1278,8 @@ body {
     .modal-body { padding: .5rem 1.5rem 2rem; }
     .modal-sender { font-size: 2rem; }
     .landing-title { font-size: clamp(3.2rem, 14vw, 6rem); }
+    .darpita-gallery-strip { padding: 3rem 1rem 4rem; }
+    .polaroid-ribbon { gap: 1rem; }
+    .ribbon-polaroid { width: 140px; padding: 8px 8px 12px; }
+    .ribbon-polaroid img { height: 140px; }
 }
