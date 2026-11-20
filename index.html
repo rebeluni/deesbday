@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>for darp, with love 🤎</title>
-    <link rel="stylesheet" href="styles.css?v=8.0">
+    <link rel="stylesheet" href="styles.css?v=9.0">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -226,15 +226,28 @@
         </div>
     </div>
 
-    <!-- SAFE MODE DISCREET WIDGET -->
-    <div id="safeModeWidget" class="safe-mode-corner" onclick="toggleSafeMode()" title="Safe Mode Toggle (Safe Word: vanilla)">
-        <span class="safe-icon" id="safeIcon">🔒</span>
-        <span class="safe-label" id="safeLabel">safe word: vanilla</span>
+    <!-- BACKGROUND AUDIO -->
+    <audio id="bgAudio" src="songs/ytmp3free.cc_jvke-her-official-lyric-video-youtubemp3free.org.mp3" loop preload="auto"></audio>
+
+    <!-- BG MUSIC TOGGLE (BOTTOM LEFT) -->
+    <button id="musicToggleBtn" class="music-toggle-btn" onclick="toggleMusic()" aria-label="Toggle background music" title="Toggle background music">
+        <span class="music-icon" id="musicIcon">🎵</span>
+        <span class="music-label" id="musicLabel">music</span>
+        <span class="music-bars" id="musicBars">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+        </span>
+    </button>
+
+    <!-- SAFE MODE DISCREET WIDGET (DOUBLE CLICK TO TOGGLE) -->
+    <div id="safeModeWidget" class="safe-mode-corner" ondblclick="toggleSafeMode()" title="vanilla">
+        <span class="safe-label" id="safeLabel">vanilla</span>
     </div>
 
     <!-- TOAST NOTIFICATION -->
     <div id="toast" class="toast"></div>
 
-    <script src="script.js?v=8.0"></script>
+    <script src="script.js?v=9.0"></script>
 </body>
 </html>

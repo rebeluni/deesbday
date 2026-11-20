@@ -16,6 +16,7 @@ let isSafeMode    = localStorage.getItem('darp_safe_mode') === 'true';
 
 document.addEventListener('DOMContentLoaded', async () => {
     updateSafeModeUI();
+    initBgMusic();
     await Promise.allSettled([
         loadLetters(),
         loadLyrics(),
@@ -153,6 +154,7 @@ async function loadReceipts() {
 function enterSite() {
     document.getElementById('main').scrollIntoView({ behavior: 'smooth' });
     triggerConfetti();
+    playBgMusicIfAllowed();
 }
 
 function switchTab(tab) {
@@ -629,23 +631,19 @@ function toggleSafeMode() {
     localStorage.setItem('darp_safe_mode', isSafeMode);
     updateSafeModeUI();
     renderLetters();
-    showToast(isSafeMode ? 'Safe mode enabled 🛡️ (vanilla)' : 'Safe mode disabled 🔓');
+    showToast(isSafeMode ? 'vanilla · safe mode on 🛡️' : 'vanilla · safe mode off 🔓');
 }
 
 function updateSafeModeUI() {
     const widget = document.getElementById('safeModeWidget');
     const label = document.getElementById('safeLabel');
-    const icon = document.getElementById('safeIcon');
-    if (!widget || !label || !icon) return;
+    if (!widget || !label) return;
     
+    label.textContent = 'vanilla';
     if (isSafeMode) {
         widget.classList.add('is-active');
-        icon.textContent = '🛡️';
-        label.textContent = 'safe mode: active (vanilla)';
     } else {
         widget.classList.remove('is-active');
-        icon.textContent = '🔒';
-        label.textContent = 'safe word: vanilla';
     }
 }
 
@@ -655,4 +653,105 @@ function showToast(msg) {
     t.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ===========================
+// BACKGROUND MUSIC
+// ===========================
+
+let bgAudio = null;
+let isAudioPlaying = false;
+
+function initBgMusic() {
+    bgAudio = document.getElementById('bgAudio');
+    if (!bgAudio) return;
+    bgAudio.volume = 0.45;
+
+    bgAudio.addEventListener('play', () => {
+        isAudioPlaying = true;
+        updateMusicUI();
+    });
+    bgAudio.addEventListener('pause', () => {
+        isAudioPlaying = false;
+        updateMusicUI();
+    });
+
+    const userMuted = localStorage.getItem('darp_music_muted') === 'true';
+
+    if (!userMuted) {
+        const playPromise = bgAudio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isAudioPlaying = true;
+                updateMusicUI();
+            }).catch(() => {
+                updateMusicUI();
+            });
+        }
+    }
+
+    const startAudioOnFirstGesture = () => {
+        playBgMusicIfAllowed();
+        document.removeEventListener('click', startAudioOnFirstGesture);
+        document.removeEventListener('keydown', startAudioOnFirstGesture);
+        document.removeEventListener('touchstart', startAudioOnFirstGesture);
+    };
+
+    document.addEventListener('click', startAudioOnFirstGesture, { once: true });
+    document.addEventListener('keydown', startAudioOnFirstGesture, { once: true });
+    document.addEventListener('touchstart', startAudioOnFirstGesture, { once: true });
+
+    updateMusicUI();
+}
+
+function playBgMusicIfAllowed() {
+    if (!bgAudio) bgAudio = document.getElementById('bgAudio');
+    if (!bgAudio) return;
+    if (localStorage.getItem('darp_music_muted') === 'true') return;
+
+    if (bgAudio.paused) {
+        bgAudio.play().then(() => {
+            isAudioPlaying = true;
+            updateMusicUI();
+        }).catch(() => {});
+    }
+}
+
+function toggleMusic() {
+    if (!bgAudio) bgAudio = document.getElementById('bgAudio');
+    if (!bgAudio) return;
+
+    if (bgAudio.paused) {
+        bgAudio.play().then(() => {
+            isAudioPlaying = true;
+            localStorage.setItem('darp_music_muted', 'false');
+            updateMusicUI();
+            showToast('Music playing 🎵');
+        }).catch(err => {
+            console.error('Playback error:', err);
+        });
+    } else {
+        bgAudio.pause();
+        isAudioPlaying = false;
+        localStorage.setItem('darp_music_muted', 'true');
+        updateMusicUI();
+        showToast('Music muted 🔇');
+    }
+}
+
+function updateMusicUI() {
+    const btn = document.getElementById('musicToggleBtn');
+    const icon = document.getElementById('musicIcon');
+    const label = document.getElementById('musicLabel');
+    if (!btn || !icon || !label) return;
+
+    if (bgAudio && !bgAudio.paused) {
+        btn.classList.add('is-playing');
+        icon.textContent = '🔊';
+        label.textContent = 'music on';
+    } else {
+        btn.classList.remove('is-playing');
+        icon.textContent = '🔇';
+        label.textContent = 'music off';
+    }
 }
