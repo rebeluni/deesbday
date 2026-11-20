@@ -227,7 +227,6 @@ function renderLetters() {
                 <div class="letter-sender">${esc(letter.sender || 'Someone Special')}</div>
                 ${letter.relationship ? `<div class="letter-relationship">${esc(letter.relationship)}</div>` : ''}
                 <div class="letter-preview">${esc(preview)}…</div>
-                <div class="letter-date">${formatDate(letter.date)}</div>
             </div>`;
         card.addEventListener('click', () => openLetterModal(letter));
         grid.appendChild(card);
@@ -486,7 +485,6 @@ function openLetterModal(letter) {
                     <span>Told you you weren't ready. Now go give Mummy & Naina a huge hug.</span>
                 </div>
             </div>
-            <div class="modal-date">${formatDate(letter.date)}</div>
         `;
     } else {
         const poemHtml = letter.poem
@@ -494,10 +492,9 @@ function openLetterModal(letter) {
         contentHtml = `
             <div class="modal-sender">${esc(letter.sender || 'Someone Special')}</div>
             ${letter.relationship ? `<div class="modal-relationship">${esc(letter.relationship)}</div>` : ''}
-            <p class="modal-message">${esc(letter.message || '')}</p>
+            <p class="modal-message">${esc((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode ? 'Happy birthday Darpita hope you achieve everything that you want!!' : letter.message || '')}</p>
             ${poemHtml}
             ${photosHtml}
-            <div class="modal-date">${formatDate(letter.date)}</div>
         `;
     }
 
