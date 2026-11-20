@@ -52,11 +52,13 @@ body {
 .landing {
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     position: relative;
     overflow: hidden;
     background: linear-gradient(155deg, #FAF0E2 0%, #F0DFC5 45%, #E6CBA8 100%);
+    padding: 4.5rem 1.5rem 5rem;
 }
 
 /* ambient blobs */
@@ -1045,9 +1047,144 @@ body {
 }
 
 /* ===========================
-   LANDING POLAROIDS
+   LANDING SCRAPBOOK GALLERY
    =========================== */
 
+.landing-scrapbook {
+    width: 100%;
+    max-width: 1140px;
+    margin: 3.2rem auto 1rem;
+    z-index: 2;
+    text-align: center;
+    position: relative;
+}
+
+.scrapbook-header {
+    margin-bottom: 2.2rem;
+}
+
+.scrapbook-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown-400);
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--beige-200);
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 0.75rem;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(60, 36, 21, 0.04);
+}
+
+.scrapbook-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 400;
+    color: var(--brown-500);
+    margin: 0 0 0.4rem;
+}
+
+.scrapbook-sub {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    color: var(--brown-300);
+    margin: 0;
+}
+
+.scrapbook-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+    gap: 2rem 1.4rem;
+    padding: 1.5rem 0.5rem 2.5rem;
+    justify-items: center;
+}
+
+.scrapbook-polaroid {
+    background: #ffffff;
+    padding: 10px 10px 14px;
+    border-radius: 6px;
+    box-shadow: 0 10px 26px rgba(60, 36, 21, 0.12);
+    border: 1px solid rgba(212, 191, 160, 0.45);
+    width: 100%;
+    max-width: 215px;
+    cursor: zoom-in;
+    position: relative;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.scrapbook-polaroid:hover {
+    transform: translateY(-8px) scale(1.06) rotate(0deg) !important;
+    box-shadow: 0 20px 45px rgba(60, 36, 21, 0.22);
+    z-index: 20;
+    border-color: var(--brown-200);
+}
+
+.scrapbook-polaroid img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+    background: var(--beige-100);
+}
+
+.scrapbook-polaroid .polaroid-tag {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: var(--brown-400);
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+    line-height: 1.15;
+}
+
+.scrapbook-polaroid .washi-tape-strip {
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tape-angle-3 {
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(4deg);
+}
+
+/* Organic gentle tilts */
+.tilt-1  { transform: rotate(-3.5deg); }
+.tilt-2  { transform: rotate(2.8deg); }
+.tilt-3  { transform: rotate(-2.2deg); }
+.tilt-4  { transform: rotate(3.6deg); }
+.tilt-5  { transform: rotate(-1.8deg); }
+.tilt-6  { transform: rotate(2.4deg); }
+.tilt-7  { transform: rotate(-3.1deg); }
+.tilt-8  { transform: rotate(2deg); }
+.tilt-9  { transform: rotate(-2.6deg); }
+.tilt-10 { transform: rotate(3.2deg); }
+.tilt-11 { transform: rotate(-2deg); }
+
+@media (max-width: 680px) {
+    .scrapbook-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.4rem 0.8rem;
+        padding: 1rem 0;
+    }
+    .scrapbook-polaroid {
+        max-width: 100%;
+        padding: 8px 8px 12px;
+    }
+    .scrapbook-polaroid .polaroid-tag {
+        font-size: 1rem;
+        margin-top: 6px;
+    }
+}
+
+/* Legacy single polaroids if used elsewhere */
 .landing-polaroid {
     position: absolute;
     background: white;
