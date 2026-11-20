@@ -81,7 +81,7 @@ const defaultIfYouWereAssignments = [
         "category": "a conversation",
         "answer": "the 3-hour one where you forget to eat",
         "reason": "deep, passionate, and somehow always about feminism, mythology, or capitalism",
-        "image": "pics/if you were/conversation/WhatsApp Image 2026-11-20 at 6.48.04 PM.jpeg" PM.jpeg"
+        "image": "pics/if you were/conversation/WhatsApp Image 2026-11-20 at 6.48.04 PM.jpeg"
     }
 ];
 
@@ -182,16 +182,22 @@ function renderLetters() {
     // Strict queue: Row 1 = Mom, Naina, Ankita | Row 2 = Rudra, Rishi, Atharva
     // Papa's letter is completely removed from this normal queue and featured in the special tribute!
     const targetOrder = ['Mummy', 'Naina', 'Ankita', 'Rudra', 'Rishi', 'Atharva'];
+    const idMap = { 'Mummy': 'box_002', 'Naina': 'box_003', 'Ankita': 'box_004', 'Rudra': 'box_005', 'Rishi': 'box_006', 'Atharva': 'box_007' };
     const displayLetters = [];
     
     targetOrder.forEach(name => {
-        const found = lettersData.find(l => l.sender === name);
+        const found = lettersData.find(l => l.sender === name || l.id === idMap[name] || (name === 'Mummy' && (l.sender === 'Mom' || l.sender === 'Your Mom')));
         if (found) displayLetters.push(found);
     });
 
     if (!displayLetters.length) {
-        grid.innerHTML = emptyState('💌', 'Letters are on their way…', 'Check back soon.');
-        return;
+        const fallback = lettersData.filter(l => l.sender !== 'Papa' && l.id !== 'box_001');
+        if (fallback.length) {
+            displayLetters.push(...fallback);
+        } else {
+            grid.innerHTML = emptyState('💌', 'Letters are on their way…', 'Check back soon.');
+            return;
+        }
     }
 
     displayLetters.forEach((letter, i) => {
@@ -200,7 +206,12 @@ function renderLetters() {
         card.style.animationDelay = `${i * 0.07}s`;
         const color   = letter.theme?.coverColor || '#F3E9D8';
         const sticker = letter.theme?.sticker     || '💌';
-        const preview = (letter.message || '').substring(0, 95);
+        let preview = (letter.message || '').substring(0, 95);
+
+        // Safe mode override for Rudra
+        if ((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode) {
+            preview = 'happy birthday darpita hope you achieve everything that you want!!';
+        }
 
         // Thumbnail priority: letter.thumbnail -> first photo in letter.photos -> fallback sticker
         let thumbUrl = letter.thumbnail || (letter.photos && letter.photos.length > 0 ? letter.photos[0] : null);
@@ -414,6 +425,7 @@ function openLetterModal(letter) {
     // Safe mode override for Rudra: all media should disappear when clicked!
     if ((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode) {
         hasMultiplePhotos = false;
+        photosHtml = '';
     }
 
     const photosHtml = hasMultiplePhotos
@@ -492,7 +504,7 @@ function openLetterModal(letter) {
         contentHtml = `
             <div class="modal-sender">${esc(letter.sender || 'Someone Special')}</div>
             ${letter.relationship ? `<div class="modal-relationship">${esc(letter.relationship)}</div>` : ''}
-            <p class="modal-message">${esc((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode ? 'Happy birthday Darpita hope you achieve everything that you want!!' : letter.message || '')}</p>
+            <p class="modal-message">${esc((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode ? 'happy birthday darpita hope you achieve everything that you want!!' : letter.message || '')}</p>
             ${poemHtml}
             ${photosHtml}
         `;
