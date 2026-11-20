@@ -206,18 +206,21 @@ function renderLetters() {
         card.style.animationDelay = `${i * 0.07}s`;
         const color   = letter.theme?.coverColor || '#F3E9D8';
         const sticker = letter.theme?.sticker     || '💌';
+        const isRudraSafe = (letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode;
         let preview = (letter.message || '').substring(0, 95);
+        let relationship = letter.relationship;
 
         // Safe mode override for Rudra
-        if ((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode) {
+        if (isRudraSafe) {
             preview = 'happy birthday darpita hope you achieve everything that you want!!';
+            relationship = '';
         }
 
         // Thumbnail priority: letter.thumbnail -> first photo in letter.photos -> fallback sticker
         let thumbUrl = letter.thumbnail || (letter.photos && letter.photos.length > 0 ? letter.photos[0] : null);
 
         // Safe mode override for Rudra
-        if ((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode) {
+        if (isRudraSafe) {
             thumbUrl = 'pics/rudra/WhatsApp Image 2026-11-20 at 8.17.48 PM.jpeg';
         }
 
@@ -236,7 +239,7 @@ function renderLetters() {
             ${coverHtml}
             <div class="letter-card-body">
                 <div class="letter-sender">${esc(letter.sender || 'Someone Special')}</div>
-                ${letter.relationship ? `<div class="letter-relationship">${esc(letter.relationship)}</div>` : ''}
+                ${relationship ? `<div class="letter-relationship">${esc(relationship)}</div>` : ''}
                 <div class="letter-preview">${esc(preview)}…</div>
             </div>`;
         card.addEventListener('click', () => openLetterModal(letter));
@@ -499,12 +502,15 @@ function openLetterModal(letter) {
             </div>
         `;
     } else {
-        const poemHtml = letter.poem
-            ? `<div class="modal-poem">${esc(letter.poem)}</div>` : '';
+        const isRudraSafe = (letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode;
+        const poem = isRudraSafe ? '' : letter.poem;
+        const relationship = isRudraSafe ? '' : letter.relationship;
+        const poemHtml = poem
+            ? `<div class="modal-poem">${esc(poem)}</div>` : '';
         contentHtml = `
             <div class="modal-sender">${esc(letter.sender || 'Someone Special')}</div>
-            ${letter.relationship ? `<div class="modal-relationship">${esc(letter.relationship)}</div>` : ''}
-            <p class="modal-message">${esc((letter.sender === 'Rudra' || letter.id === 'box_005') && isSafeMode ? 'happy birthday darpita hope you achieve everything that you want!!' : letter.message || '')}</p>
+            ${relationship ? `<div class="modal-relationship">${esc(relationship)}</div>` : ''}
+            <p class="modal-message">${esc(isRudraSafe ? 'happy birthday darpita hope you achieve everything that you want!!' : letter.message || '')}</p>
             ${poemHtml}
             ${photosHtml}
         `;
