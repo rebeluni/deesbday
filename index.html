@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>for darp, with love 🤎</title>
-    <link rel="stylesheet" href="styles.css?v=4.0">
+    <link rel="stylesheet" href="styles.css?v=5.0">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -19,11 +19,21 @@
         <div class="landing-deco ld-4">🤎</div>
         <div class="landing-deco ld-5">✦</div>
 
-        <!-- Left Polaroid of Darpita -->
-        <div class="landing-polaroid polaroid-hero-left" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.03 PM.jpeg', 'the birthday girl ✦')">
+        <!-- Left Polaroids (stacked 3) -->
+        <div class="landing-polaroid polaroid-hero-left-top" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.03 PM.jpeg', 'the birthday girl ✦')">
             <div class="washi-tape-strip tape-angle-1"></div>
-            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.03%20PM.jpeg" alt="Darpita" style="width: 100%; height: 210px; object-fit: cover; border-radius: 4px; display: block;" loading="lazy">
+            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.03%20PM.jpeg" alt="Darpita" loading="lazy">
             <p class="polaroid-tag">the birthday girl ✦</p>
+        </div>
+        <div class="landing-polaroid polaroid-hero-left-mid" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.04 PM.jpeg', 'grace & light 🌸')">
+            <div class="washi-tape-strip tape-center"></div>
+            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.04%20PM.jpeg" alt="Darpita" loading="lazy">
+            <p class="polaroid-tag">grace & light 🌸</p>
+        </div>
+        <div class="landing-polaroid polaroid-hero-left-bot" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.06 PM.jpeg', 'that look 💅')">
+            <div class="washi-tape-strip tape-angle-2"></div>
+            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.48.06%20PM.jpeg" alt="Darpita" loading="lazy">
+            <p class="polaroid-tag">that look 💅</p>
         </div>
 
         <!-- Center Text -->
@@ -36,11 +46,21 @@
             </button>
         </div>
 
-        <!-- Right Polaroid of Darpita -->
-        <div class="landing-polaroid polaroid-hero-right" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.30.14 PM (1).jpeg', 'certified main character 🌸')">
+        <!-- Right Polaroids (stacked 3) -->
+        <div class="landing-polaroid polaroid-hero-right-top" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.30.14 PM (1).jpeg', 'certified main character 🌸')">
             <div class="washi-tape-strip tape-angle-2"></div>
-            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.30.14%20PM%20(1).jpeg" alt="Darpita" style="width: 100%; height: 210px; object-fit: cover; border-radius: 4px; display: block;" loading="lazy">
+            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.30.14%20PM%20(1).jpeg" alt="Darpita" loading="lazy">
             <p class="polaroid-tag">main character 🌸</p>
+        </div>
+        <div class="landing-polaroid polaroid-hero-right-mid" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.50.23 PM.jpeg', 'unmatched energy ✨')">
+            <div class="washi-tape-strip tape-center"></div>
+            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%206.50.23%20PM.jpeg" alt="Darpita" loading="lazy">
+            <p class="polaroid-tag">unmatched ✨</p>
+        </div>
+        <div class="landing-polaroid polaroid-hero-right-bot" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 8.01.43 PM (7).jpeg', 'golden hour forever 🤎')">
+            <div class="washi-tape-strip tape-angle-1"></div>
+            <img src="pics/darpita%20own%20pics/WhatsApp%20Image%202026-11-20%20at%208.01.43%20PM%20(7).jpeg" alt="Darpita" loading="lazy">
+            <p class="polaroid-tag">golden 🤎</p>
         </div>
     </section>
 
@@ -55,9 +75,9 @@
                     <div class="tabs">
                         <button class="tab active" data-tab="letters"    onclick="switchTab('letters')">💌 The Formalities</button>
                         <button class="tab"         data-tab="lyrics"     onclick="switchTab('lyrics')">🎵 Songs You Ruined</button>
-                        <button class="tab"         data-tab="things"     onclick="switchTab('things')">🌿 Certified Lore</button>
                         <button class="tab"         data-tab="ifyouwere"  onclick="switchTab('ifyouwere')">✨ The Psychoanalysis</button>
                         <button class="tab"         data-tab="receipts"   onclick="switchTab('receipts')">🧾 Receipts</button>
+                        <button class="tab"         data-tab="things"     onclick="switchTab('things')">🌿 Certified Lore</button>
                     </div>
                 </div>
             </div>
@@ -83,7 +103,6 @@
 
                     <div class="special-badge-pill">✦ SPECIAL DELIVERY · THE CROWN JEWEL ✦</div>
                     <h3 class="special-card-title">The One Letter You Definitely Aren't Ready For</h3>
-                    <p class="special-card-disclaimer">We're being 100% serious: pause whatever you're doing, grab the tissues, and fix your eyeliner later. This one comes with an absolute guarantee of happy tears.</p>
 
                     <div class="special-sender-row">
                         <div class="special-avatar-container">
@@ -115,16 +134,6 @@
             <div class="cards-grid" id="lyricsGrid"></div>
         </section>
 
-        <!-- LITTLE THINGS -->
-        <section id="things" class="tab-section">
-            <div class="section-header">
-                <span class="section-deco">✦</span>
-                <h2 class="section-title">Little Things</h2>
-                <p class="section-subtitle">a catalog of completely mundane things you've successfully claimed copyright over.</p>
-            </div>
-            <div class="things-grid" id="thingsGrid"></div>
-        </section>
-
         <!-- IF YOU WERE A... -->
         <section id="ifyouwere" class="tab-section">
             <div class="section-header">
@@ -143,6 +152,16 @@
                 <p class="section-subtitle">the paper trail. you can't gaslight us out of history.</p>
             </div>
             <div class="receipts-grid" id="receiptsGrid"></div>
+        </section>
+
+        <!-- LITTLE THINGS -->
+        <section id="things" class="tab-section">
+            <div class="section-header">
+                <span class="section-deco">✦</span>
+                <h2 class="section-title">Little Things</h2>
+                <p class="section-subtitle">a catalog of completely mundane things you've successfully claimed copyright over.</p>
+            </div>
+            <div class="things-grid" id="thingsGrid"></div>
         </section>
 
         <!-- DARPITA PHOTO ARCHIVE RIBBON -->
@@ -216,6 +235,6 @@
     <!-- TOAST NOTIFICATION -->
     <div id="toast" class="toast"></div>
 
-    <script src="script.js?v=4.0"></script>
+    <script src="script.js?v=5.0"></script>
 </body>
 </html>

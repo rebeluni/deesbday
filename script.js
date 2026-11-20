@@ -69,7 +69,7 @@ const defaultIfYouWereAssignments = [
         "category": "a number",
         "answer": "3",
         "reason": "mulank solidarity 🤎",
-        "image": "pics/if you were/mulank/WhatsApp Image 2026-11-20 at 8.01.43 PM (2).jpeg"
+        "image": "pics/if you were/mulank/download (8).jpg"
     },
     {
         "category": "a dream",
@@ -81,7 +81,7 @@ const defaultIfYouWereAssignments = [
         "category": "a conversation",
         "answer": "the 3-hour one where you forget to eat",
         "reason": "deep, passionate, and somehow always about feminism, mythology, or capitalism",
-        "image": "pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.02 PM.jpeg"
+        "image": "pics/if you were/conversation/WhatsApp Image 2026-11-20 at 6.48.04 PM.jpeg" PM.jpeg"
     }
 ];
 
@@ -300,19 +300,20 @@ function renderThings() {
         grid.innerHTML = emptyState('🌿', 'Little things, incoming…', 'Check back soon.');
         return;
     }
-    thingsData.forEach((contributor, i) => {
+    // Flatten all items across contributors into individual cards
+    const allItems = [];
+    thingsData.forEach(contributor => {
+        (contributor.items || []).forEach(item => allItems.push(item));
+    });
+    allItems.forEach((item, i) => {
         const card = document.createElement('div');
         card.className = 'things-card';
-        card.style.animationDelay = `${i * 0.07}s`;
-        const itemsHtml = (contributor.items || []).map(item => `
-            <div class="thing-item">
-                <span class="thing-emoji">${item.emoji || '✦'}</span>
-                <div>
-                    <div class="thing-name">${esc(item.name)}</div>
-                    ${item.reason ? `<div class="thing-reason">${esc(item.reason)}</div>` : ''}
-                </div>
-            </div>`).join('');
-        card.innerHTML = `${itemsHtml}`;
+        card.style.animationDelay = `${i * 0.08}s`;
+        card.innerHTML = `
+            <span class="thing-emoji">${item.emoji || '✦'}</span>
+            <div class="thing-name">${esc(item.name)}</div>
+            ${item.reason ? `<div class="thing-reason">${esc(item.reason)}</div>` : ''}
+        `;
         grid.appendChild(card);
     });
 }
