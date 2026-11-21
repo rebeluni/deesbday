@@ -8,7 +8,8 @@ let lyricsData    = [];
 let thingsData    = [];
 let ifyouwereData = [];
 let receiptsData  = [];
-let isSafeMode    = localStorage.getItem('darp_safe_mode') !== 'false';
+let isSafeMode    = true; // Always ON by default, even on refresh!
+try { localStorage.removeItem('darp_safe_mode'); } catch (e) {}
 
 // ===========================
 // INIT
@@ -644,7 +645,6 @@ function handleVanillaTap(e) {
 
 function toggleSafeMode() {
     isSafeMode = !isSafeMode;
-    localStorage.setItem('darp_safe_mode', isSafeMode);
     updateSafeModeUI();
     renderLetters();
     showToast(isSafeMode ? 'vanilla · safe mode on 🛡️' : 'vanilla · safe mode off 🔓');
