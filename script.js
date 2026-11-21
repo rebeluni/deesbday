@@ -661,13 +661,14 @@ function showToast(msg) {
 
 let bgAudio = null;
 let isAudioPlaying = false;
+let userExplicitlyMuted = false;
 
 function initBgMusic() {
     bgAudio = document.getElementById('bgAudio');
     if (!bgAudio) return;
     
     // Always volume comfortable and looping
-    bgAudio.volume = 0.45;
+    bgAudio.volume = 0.5;
     bgAudio.loop = true;
 
     // Bulletproof loop restart: if audio ends, rewind and replay
@@ -685,34 +686,35 @@ function initBgMusic() {
         updateMusicUI();
     });
 
-    // Reset any old muted state so music is ALWAYS ON BY DEFAULT
-    localStorage.removeItem('darp_music_muted');
-
-    const tryPlay = () => {
+    const attemptPlay = () => {
         if (!bgAudio) bgAudio = document.getElementById('bgAudio');
-        if (!bgAudio) return;
+        if (!bgAudio || userExplicitlyMuted) return;
         if (bgAudio.paused) {
-            bgAudio.play().then(() => {
-                isAudioPlaying = true;
-                updateMusicUI();
-            }).catch(() => {
-                updateMusicUI();
-            });
+            const p = bgAudio.play();
+            if (p !== undefined) {
+                p.then(() => {
+                    isAudioPlaying = true;
+                    updateMusicUI();
+                }).catch(() => {
+                    updateMusicUI();
+                });
+            }
         }
     };
 
-    // 1. Attempt playback immediately on page load
-    tryPlay();
+    // 1. Try to play immediately as soon as JS runs
+    attemptPlay();
 
-    // 2. Also start on any first user gesture (click, touch, scroll, keydown)
-    const gestureEvents = ['click', 'touchstart', 'scroll', 'keydown'];
-    const handleFirstGesture = () => {
-        tryPlay();
-        gestureEvents.forEach(evt => window.removeEventListener(evt, handleFirstGesture));
+    // 2. Also listen for ANY user gesture anywhere on the page (capture phase)
+    // Keep listening until audio actually starts playing!
+    const interactionHandler = () => {
+        if (!userExplicitlyMuted && bgAudio && bgAudio.paused) {
+            attemptPlay();
+        }
     };
 
-    gestureEvents.forEach(evt => {
-        window.addEventListener(evt, handleFirstGesture, { once: true, passive: true });
+    ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(evt => {
+        document.addEventListener(evt, interactionHandler, { passive: true, capture: true });
     });
 
     updateMusicUI();
@@ -720,7 +722,7 @@ function initBgMusic() {
 
 function playBgMusicIfAllowed() {
     if (!bgAudio) bgAudio = document.getElementById('bgAudio');
-    if (!bgAudio) return;
+    if (!bgAudio || userExplicitlyMuted) return;
 
     if (bgAudio.paused) {
         bgAudio.play().then(() => {
@@ -735,6 +737,7 @@ function toggleMusic() {
     if (!bgAudio) return;
 
     if (bgAudio.paused) {
+        userExplicitlyMuted = false;
         bgAudio.play().then(() => {
             isAudioPlaying = true;
             updateMusicUI();
@@ -743,6 +746,7 @@ function toggleMusic() {
             console.error('Playback error:', err);
         });
     } else {
+        userExplicitlyMuted = true;
         bgAudio.pause();
         isAudioPlaying = false;
         updateMusicUI();
