@@ -626,6 +626,22 @@ function esc(str) {
 // SAFE MODE (SAFE WORD: VANILLA)
 // ===========================
 
+let lastVanillaTap = 0;
+
+function handleVanillaTap(e) {
+    const now = Date.now();
+    const diff = now - lastVanillaTap;
+    if (diff > 0 && diff < 400) {
+        // Double tap confirmed on mobile / touch device!
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSafeMode();
+        lastVanillaTap = 0;
+    } else {
+        lastVanillaTap = now;
+    }
+}
+
 function toggleSafeMode() {
     isSafeMode = !isSafeMode;
     localStorage.setItem('darp_safe_mode', isSafeMode);
@@ -689,6 +705,8 @@ function initBgMusic() {
     const attemptPlay = () => {
         if (!bgAudio) bgAudio = document.getElementById('bgAudio');
         if (!bgAudio || userExplicitlyMuted) return;
+
+        bgAudio.muted = false;
         if (bgAudio.paused) {
             const p = bgAudio.play();
             if (p !== undefined) {
@@ -696,9 +714,16 @@ function initBgMusic() {
                     isAudioPlaying = true;
                     updateMusicUI();
                 }).catch(() => {
-                    updateMusicUI();
+                    // Pre-warm audio in muted mode if cold unmuted autoplay is blocked by policy
+                    bgAudio.muted = true;
+                    bgAudio.play().then(() => {
+                        updateMusicUI();
+                    }).catch(() => {});
                 });
             }
+        } else if (bgAudio.muted) {
+            bgAudio.muted = false;
+            updateMusicUI();
         }
     };
 
@@ -709,14 +734,19 @@ function initBgMusic() {
     window.addEventListener('focus', attemptPlay);
 
     // 2. Also listen for ANY user gesture anywhere on the page (capture phase)
-    // Starts on scroll, click, tap, wheel, or keypress!
+    // Starts on scroll, wheel, touch, swipe, click, or keypress!
     const interactionHandler = () => {
-        if (!userExplicitlyMuted && bgAudio && bgAudio.paused) {
-            attemptPlay();
+        if (!userExplicitlyMuted && bgAudio) {
+            if (bgAudio.muted) {
+                bgAudio.muted = false;
+            }
+            if (bgAudio.paused) {
+                attemptPlay();
+            }
         }
     };
 
-    ['scroll', 'wheel', 'pointerdown', 'touchstart', 'click', 'keydown'].forEach(evt => {
+    ['scroll', 'wheel', 'touchmove', 'touchstart', 'touchend', 'pointerdown', 'mousedown', 'click', 'keydown'].forEach(evt => {
         window.addEventListener(evt, interactionHandler, { passive: true, capture: true });
         document.addEventListener(evt, interactionHandler, { passive: true, capture: true });
     });
