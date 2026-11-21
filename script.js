@@ -709,14 +709,15 @@ function initBgMusic() {
     window.addEventListener('focus', attemptPlay);
 
     // 2. Also listen for ANY user gesture anywhere on the page (capture phase)
-    // Keep listening until audio actually starts playing!
+    // Starts on scroll, click, tap, wheel, or keypress!
     const interactionHandler = () => {
         if (!userExplicitlyMuted && bgAudio && bgAudio.paused) {
             attemptPlay();
         }
     };
 
-    ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(evt => {
+    ['scroll', 'wheel', 'pointerdown', 'touchstart', 'click', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, interactionHandler, { passive: true, capture: true });
         document.addEventListener(evt, interactionHandler, { passive: true, capture: true });
     });
 
@@ -761,21 +762,14 @@ function updateMusicUI() {
     const btn = document.getElementById('musicToggleBtn');
     const icon = document.getElementById('musicIcon');
     const label = document.getElementById('musicLabel');
-    const badge = document.getElementById('musicPromptBadge');
 
     if (bgAudio && !bgAudio.paused) {
         if (btn) btn.classList.add('is-playing');
         if (icon) icon.textContent = '🔊';
         if (label) label.textContent = 'music on';
-        if (badge) badge.classList.remove('is-visible');
     } else {
         if (btn) btn.classList.remove('is-playing');
         if (icon) icon.textContent = '🔇';
         if (label) label.textContent = 'music off';
-        if (badge && !userExplicitlyMuted) {
-            badge.classList.add('is-visible');
-        } else if (badge) {
-            badge.classList.remove('is-visible');
-        }
     }
 }

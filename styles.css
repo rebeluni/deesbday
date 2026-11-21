@@ -1777,45 +1777,6 @@ body {
 }
 
 /* ===========================
-   MUSIC PROMPT BADGE
-   =========================== */
-
-.music-prompt-badge {
-    position: absolute;
-    top: 22px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(253, 250, 246, 0.96);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(201, 168, 108, 0.5);
-    padding: 6px 18px;
-    border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--brown-500);
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    box-shadow: 0 4px 18px rgba(60, 36, 21, 0.1);
-    z-index: 100;
-    display: none;
-    align-items: center;
-    gap: 7px;
-    animation: badgeFloat 2.4s ease-in-out infinite;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.music-prompt-badge.is-visible {
-    display: inline-flex;
-}
-
-@keyframes badgeFloat {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-3px); }
-}
-
-/* ===========================
    BG MUSIC WIDGET (BOTTOM LEFT)
    =========================== */
 
