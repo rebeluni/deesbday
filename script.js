@@ -702,8 +702,11 @@ function initBgMusic() {
         }
     };
 
-    // 1. Try to play immediately as soon as JS runs
+    // 1. Try to play immediately as soon as JS runs and when ready
     attemptPlay();
+    window.addEventListener('load', attemptPlay);
+    bgAudio.addEventListener('canplay', attemptPlay);
+    window.addEventListener('focus', attemptPlay);
 
     // 2. Also listen for ANY user gesture anywhere on the page (capture phase)
     // Keep listening until audio actually starts playing!
@@ -758,15 +761,21 @@ function updateMusicUI() {
     const btn = document.getElementById('musicToggleBtn');
     const icon = document.getElementById('musicIcon');
     const label = document.getElementById('musicLabel');
-    if (!btn || !icon || !label) return;
+    const badge = document.getElementById('musicPromptBadge');
 
     if (bgAudio && !bgAudio.paused) {
-        btn.classList.add('is-playing');
-        icon.textContent = '🔊';
-        label.textContent = 'music on';
+        if (btn) btn.classList.add('is-playing');
+        if (icon) icon.textContent = '🔊';
+        if (label) label.textContent = 'music on';
+        if (badge) badge.classList.remove('is-visible');
     } else {
-        btn.classList.remove('is-playing');
-        icon.textContent = '🔇';
-        label.textContent = 'music off';
+        if (btn) btn.classList.remove('is-playing');
+        if (icon) icon.textContent = '🔇';
+        if (label) label.textContent = 'music off';
+        if (badge && !userExplicitlyMuted) {
+            badge.classList.add('is-visible');
+        } else if (badge) {
+            badge.classList.remove('is-visible');
+        }
     }
 }

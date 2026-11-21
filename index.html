@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>for darp, with love 🤎</title>
-    <link rel="stylesheet" href="styles.css?v=15.0">
+    <link rel="stylesheet" href="styles.css?v=16.0">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -12,12 +12,19 @@
     <div class="confetti-container" id="confetti"></div>
 
     <!-- LANDING -->
-    <section id="landing" class="landing">
+    <section id="landing" class="landing" onclick="playBgMusicIfAllowed()">
         <div class="landing-deco ld-1">✦</div>
         <div class="landing-deco ld-2">🌸</div>
         <div class="landing-deco ld-3">✦</div>
         <div class="landing-deco ld-4">🤎</div>
         <div class="landing-deco ld-5">✦</div>
+
+        <!-- Autoplay fallback hint badge (only visible if browser blocks cold audio on load) -->
+        <div id="musicPromptBadge" class="music-prompt-badge" onclick="playBgMusicIfAllowed()">
+            <span>🎵</span>
+            <span>click anywhere for soundtrack</span>
+            <span>✨</span>
+        </div>
 
         <!-- Left Polaroids (stacked 3) -->
         <div class="landing-polaroid polaroid-hero-left-top" onclick="openLightbox('pics/darpita own pics/WhatsApp Image 2026-11-20 at 6.48.03 PM.jpeg', 'the birthday girl ✦')">
@@ -248,6 +255,6 @@
     <!-- TOAST NOTIFICATION -->
     <div id="toast" class="toast"></div>
 
-    <script src="script.js?v=15.0"></script>
+    <script src="script.js?v=16.0"></script>
 </body>
 </html>
