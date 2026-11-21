@@ -223,7 +223,7 @@ function renderLetters() {
 
         // Safe mode override for Rudra
         if (isRudraSafe) {
-            thumbUrl = 'pics/rudra/WhatsApp Image 2026-11-20 at 8.17.48 PM.jpeg';
+            thumbUrl = 'pics/rudra/WhatsApp Image 2026-11-21 at 11.56.47 AM.jpeg';
         }
 
         const thumbPosition = letter.thumbnailPosition || 'center 20%';
